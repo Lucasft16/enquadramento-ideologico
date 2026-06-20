@@ -1,0 +1,22 @@
+{
+  "neoliberal": [
+    "mercado", "privatização", "eficiência", "competitividade", "reforma",
+    "fiscal", "ajuste", "austeridade", "liberalização", "desregulação",
+    "capital", "investimento", "produtividade", "exportação", "crescimento"
+  ],
+  "progressista": [
+    "desigualdade", "redistribuição", "direitos", "saúde", "educação",
+    "moradia", "trabalhador", "sindicato", "proteção", "social",
+    "público", "gratuidade", "inclusão", "vulnerável", "pobre"
+  ],
+  "conservador": [
+    "família", "tradição", "valores", "ordem", "segurança",
+    "autoridade", "religião", "nação", "pátria", "identidade",
+    "costumes", "moral", "disciplina", "responsabilidade", "hierarquia"
+  ],
+  "ancap": [
+    "liberdade", "propriedade", "voluntário", "contrato", "anarquia",
+    "monopolio", "força", "coerção", "livre_mercado", "estatismo",
+    "imposto", "regulação", "intervenção", "autônomo", "agência"
+  ]
+}
