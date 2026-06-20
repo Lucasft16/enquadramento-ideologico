@@ -1,0 +1,10 @@
+window_size: 5
+min_df: 2
+max_df: 0.95
+weight_method: npmi        # frequency | npmi | jaccard
+filter_method: kruskal     # kruskal | threshold | disparity
+community_method: girvan_newman  # girvan_newman | label_propagation
+threshold: 0.1
+disparity_alpha: 0.05
+seed: 42
+top_k_centrality: 20
