@@ -41,3 +41,24 @@ def sanitize(text: str) -> str:
     # Colapsa espaços
     text = re.sub(r"\s+", " ", text).strip()
     return text
+
+
+# Terminadores de sentença: pontuação final e quebras de linha.
+_SENTENCE_SPLIT = re.compile(r"[.!?;]+|\n+")
+
+
+def split_sentences(text: str) -> list[str]:
+    """Divide o texto bruto em sentenças antes da sanitização.
+
+    A divisão precisa ocorrer ANTES de `sanitize`, pois a sanitização remove
+    a pontuação (incluindo ".", "!", "?") que delimita as sentenças. Manter as
+    fronteiras de sentença evita que janelas de coocorrência cruzem frases —
+    ex.: o último termo de uma frase não coocorre com o primeiro da próxima.
+
+    Args:
+        text: Texto bruto do documento.
+
+    Returns:
+        Lista de sentenças (strings não vazias), ainda sem sanitizar.
+    """
+    return [s.strip() for s in _SENTENCE_SPLIT.split(text) if s.strip()]
