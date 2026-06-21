@@ -157,7 +157,7 @@ class TestBuildDocGraph:
             "ideology_terms": {"unica": {"mercado": 1.0, "capital": 0.8}},
             "graph_edges": [("mercado", "capital", 0.9)],
         }
-        scores = classify(["mercado", "capital"], model, method="jaccard")
+        scores = classify([["mercado", "capital"]], model, method="jaccard")
         assert scores["unica"] == pytest.approx(1.0)
     
     def test_terms_overlap_all_ideologies_equally(self):
@@ -168,7 +168,7 @@ class TestBuildDocGraph:
             "ideology_terms": {"A": dict(terms), "B": dict(terms), "C": dict(terms)},
             "graph_edges": [],
         }
-        scores = classify(["x", "y"], model, method="jaccard")
+        scores = classify([["x", "y"]], model, method="jaccard")
         assert scores["A"] == pytest.approx(scores["B"], abs=1e-9)
         assert scores["B"] == pytest.approx(scores["C"], abs=1e-9)
     
@@ -181,7 +181,7 @@ class TestBuildDocGraph:
             },
             "graph_edges": [],
         }
-        scores = classify(["trabalho", "sindicato"], model, method="jaccard")
+        scores = classify([["trabalho", "sindicato"]], model, method="jaccard")
         assert scores["esquerda"] > scores["direita"]
     
     def test_very_long_terms_list(self):
@@ -192,7 +192,7 @@ class TestBuildDocGraph:
             "graph_edges": [],
         }
         terms = [f"t{i}" for i in range(10000)]
-        scores = classify(terms, model, method="jaccard")
+        scores = classify([terms], model, method="jaccard")
         assert scores["grande"] == pytest.approx(1.0)
     
     def test_duplicate_terms_in_list(self):
@@ -207,8 +207,8 @@ class TestBuildDocGraph:
         # "mercado" repetido 100x: deve se comportar igual a ["mercado"]
         terms_repeated = ["mercado"] * 100
         terms_single = ["mercado"]
-        s1 = classify(terms_repeated, model, method="jaccard")
-        s2 = classify(terms_single, model, method="jaccard")
+        s1 = classify([terms_repeated], model, method="jaccard")
+        s2 = classify([terms_single], model, method="jaccard")
         assert s1["A"] == pytest.approx(s2["A"])
 
 

@@ -48,10 +48,10 @@ class Graph:
             v: Vértice de destino.
             w: Peso a acumular na aresta.
         """
-        if u == v:
-            return  # sem auto-laços
         self.add_vertex(u)
         self.add_vertex(v)
+        if u == v:
+            return  # sem auto-laços
         self._adj[u][v] = self._adj[u].get(v, 0.0) + w
         self._adj[v][u] = self._adj[v].get(u, 0.0) + w
 
@@ -77,6 +77,8 @@ class Graph:
         """
         self.add_vertex(u)
         self.add_vertex(v)
+        if u == v:
+            return  # sem auto-laços
         self._adj[u][v] = w
         self._adj[v][u] = w
 
