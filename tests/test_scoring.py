@@ -96,22 +96,6 @@ class TestClassifyJaccard:
         scores = classify(["xyz", "abc", "naoexiste"], model, method="jaccard")
         assert sum(scores.values()) == pytest.approx(1.0, abs=1e-9)
 
-
-class TestClassifyDijkstra:
-    def test_distribution_sums_to_one(self):
-        model = _make_model()
-        terms = ["mercado", "saúde"]
-        scores = classify(terms, model, method="dijkstra")
-        assert sum(scores.values()) == pytest.approx(1.0, abs=1e-9)
-
-    def test_dijkstra_neoliberal_dominant(self):
-        model = _make_model()
-        terms = ["mercado", "privatização", "capital"]
-        scores = classify(terms, model, method="dijkstra")
-        dominant = max(scores, key=lambda k: scores[k])
-        assert dominant == "neoliberal"
-
-
 class TestClassifyErrors:
     def test_invalid_method_raises(self):
         model = _make_model()

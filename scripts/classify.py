@@ -1,7 +1,7 @@
 """FASE B — Classifica um documento novo e gera visualização do subgrafo colorido.
 
 Execução:
-    python scripts/classify.py data/examples/exemplo.txt [--model CAMINHO] [--method jaccard|dijkstra]
+    python scripts/classify.py data/examples/exemplo.txt [--model CAMINHO] [--method jaccard]
 
 Saída:
     Distribuição ideológica impressa no terminal.
@@ -53,7 +53,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--method",
-        choices=["jaccard", "dijkstra"],
+        choices=["jaccard"],
         default="jaccard",
         help="Método de classificação.",
     )
