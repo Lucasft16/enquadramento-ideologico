@@ -5,7 +5,7 @@ import pytest
 
 from src.graph_build.vocabulary import Vocabulary
 from src.graph_build.cooccurrence import count_cooccurrences, build_vocab_from_windows
-from src.graph_build.weighting import build_weighted_graph, npmi
+from src.graph_build.weighting import build_weighted_graph, npmi, jaccard
 from src.datastructures.graph import Graph
 
 
@@ -69,6 +69,46 @@ class TestVocabulary:
         pruned = v.prune(min_df=1, max_df_ratio=1.0)
         assert len(pruned) == 3
 
+    def test_term_id_raises_for_unknown(self):
+        """term_id de termo não registrado deve lançar KeyError."""
+        v = Vocabulary()
+        with pytest.raises(KeyError):
+            v.term_id("fantasma")
+    
+    def test_id_term_raises_for_unknown(self):
+        """id_term de ID inexistente deve lançar KeyError."""
+        v = Vocabulary()
+        with pytest.raises(KeyError):
+            v.id_term(999)
+    
+    def test_prune_empty_vocabulary(self):
+        """prune em vocabulário vazio deve retornar vocabulário vazio."""
+        v = Vocabulary()
+        pruned = v.prune(min_df=1)
+        assert len(pruned) == 0
+    
+    def test_prune_max_df_ratio_zero(self):
+        """max_df_ratio=0.0 → nenhum termo deve sobrar (max_abs = 0)."""
+        v = Vocabulary()
+        v.register_occurrence("comum")
+        pruned = v.prune(min_df=1, max_df_ratio=0.0)
+        assert len(pruned) == 0
+    
+    def test_vocabulary_terms_list(self):
+        """terms() deve retornar exatamente os termos adicionados."""
+        v = Vocabulary()
+        for t in ["alfa", "beta", "gama"]:
+            v.add(t)
+        assert sorted(v.terms()) == ["alfa", "beta", "gama"]
+    
+    def test_iteration_order_preserved(self):
+        """__iter__ deve iterar pelos termos na ordem de inserção."""
+        v = Vocabulary()
+        terms = ["z", "a", "m", "b"]
+        for t in terms:
+            v.add(t)
+        assert list(v) == terms
+
 
 # ─────────────────────────────────────────────
 # Coocorrências
@@ -111,6 +151,37 @@ class TestCooccurrence:
         vocab = build_vocab_from_windows(windows)
         assert "estado" in vocab
         assert vocab.document_frequency("mercado") == 2  # aparece nas 2 janelas
+        
+    def test_count_cooccurrences_empty_corpus(self):
+        """Corpus vazio → dicionário de coocorrências vazio."""
+        vocab = Vocabulary()
+        result = count_cooccurrences([], vocab)
+        assert result == {}
+    
+    def test_count_cooccurrences_empty_windows(self):
+        """Documento com lista de janelas vazia → sem coocorrências."""
+        vocab = Vocabulary()
+        vocab.add("a")
+        result = count_cooccurrences([[]], vocab)
+        assert result == {}
+    
+    def test_count_terms_not_in_vocab_ignored(self):
+        """Termos não registrados no vocabulário devem ser ignorados silenciosamente."""
+        vocab = Vocabulary()
+        vocab.add("a")  # só "a" no vocab; "b" não está
+        windows = [[["a", "b"]]]
+        cooc = count_cooccurrences(windows, vocab)
+        # Sem par válido (b não está no vocab)
+        assert len(cooc) == 0
+    
+    def test_count_single_token_window(self):
+        """Janela com apenas 1 token distinto → sem pares."""
+        vocab = Vocabulary()
+        vocab.add("x")
+        windows = [[["x", "x", "x"]]]  # mesmo token repetido
+        cooc = count_cooccurrences(windows, vocab)
+        assert len(cooc) == 0
+
 
 
 # ─────────────────────────────────────────────
@@ -205,3 +276,49 @@ class TestWeighting:
         g = build_weighted_graph(cooc, vocab, method="npmi", N=100)
         for _, _, w in g.edges():
             assert 0.0 <= w <= 1.0 + 1e-9
+            
+    def test_npmi_n_zero_returns_empty_graph(self):
+        """npmi com N=0 deve retornar grafo sem arestas (guarda divisão por zero)."""
+        vocab = Vocabulary()
+        vocab.add("a")
+        vocab.add("b")
+        g = Graph()
+        result = npmi({}, vocab, g, N=0)
+        assert result.num_edges() == 0
+    
+    def test_npmi_cooc_equals_n_p_ab_1(self):
+        """cooc = N → P(a,b)=1 → -log(P(a,b))=0 → denominador=0 → aresta ignorada."""
+        vocab = Vocabulary()
+        vocab.add("a")
+        vocab.add("b")
+        vocab._doc_freq[0] = 10
+        vocab._doc_freq[1] = 10
+        # cooc = N=10 → p_ab = 1.0 → denom = -log(1) = 0 → ignorado
+        key = (0, 1)
+        g = Graph()
+        result = npmi({key: 10}, vocab, g, N=10)
+        assert not result.has_edge("a", "b")
+    
+    def test_jaccard_cooc_greater_than_df(self):
+        """
+        Se cooc > min(df_a, df_b), Jaccard pode ficar > 1 ou o denominador < 0.
+        Documenta que o denominador <= 0 → aresta ignorada.
+        """
+        vocab = Vocabulary()
+        vocab.add("a")
+        vocab.add("b")
+        # df(a)=1, df(b)=1, cooc=5 → denom = 1+1-5 = -3 <= 0 → ignorada
+        vocab._doc_freq[vocab.term_id("a")] = 1
+        vocab._doc_freq[vocab.term_id("b")] = 1
+        ta, tb = vocab.term_id("a"), vocab.term_id("b")
+        key = (ta, tb) if ta < tb else (tb, ta)
+        g = Graph()
+        jaccard({key: 5}, vocab, g)
+        assert not g.has_edge("a", "b")
+    
+    def test_build_weighted_graph_empty_cooc(self):
+        """Coocorrência vazia → grafo sem arestas para qualquer método."""
+        for method in ["frequency", "npmi", "jaccard"]:
+            vocab = Vocabulary()
+            g = build_weighted_graph({}, vocab, method=method, N=10)
+            assert g.num_edges() == 0

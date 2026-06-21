@@ -57,6 +57,22 @@ class TestNormalize:
     def test_single_ideology_is_one(self):
         result = _normalize({"x": 5.0})
         assert result["x"] == pytest.approx(1.0)
+        
+    def test_normalize_empty_dict(self):
+        """_normalize de dicionário vazio deve retornar {}."""
+        assert _normalize({}) == {}
+    
+    def test_normalize_all_negative(self):
+        """Scores todos negativos: total <= 0 → distribuição uniforme."""
+        result = _normalize({"A": -1.0, "B": -2.0})
+        assert result["A"] == pytest.approx(0.5)
+        assert result["B"] == pytest.approx(0.5)
+    
+    def test_normalize_large_values(self):
+        """Valores muito grandes: normalização deve funcionar sem overflow."""
+        import sys
+        result = _normalize({"A": sys.float_info.max / 2, "B": sys.float_info.max / 2})
+        assert result["A"] == pytest.approx(0.5, abs=1e-6)
 
 
 class TestClassifyJaccard:
@@ -129,6 +145,71 @@ class TestBuildDocGraph:
     def test_single_token_window_no_edges(self):
         g = build_doc_graph([["mercado"]])
         assert g.num_edges() == 0
+        
+    def test_empty_model_ideologies(self):
+        """Modelo sem ideologias → _normalize retorna {} sem divisão por zero."""
+        result = _normalize({})
+        assert result == {}
+    
+    def test_single_ideology_model(self):
+        """Modelo com uma única ideologia → probabilidade = 1.0."""
+        model = {
+            "ideology_terms": {"unica": {"mercado": 1.0, "capital": 0.8}},
+            "graph_edges": [("mercado", "capital", 0.9)],
+        }
+        scores = classify(["mercado", "capital"], model, method="jaccard")
+        assert scores["unica"] == pytest.approx(1.0)
+    
+    def test_terms_overlap_all_ideologies_equally(self):
+        """Termos que aparecem igualmente em todas as ideologias → distribuição uniforme."""
+        # Mesmo conjunto de termos em todas as ideologias com mesmos scores
+        terms = {"x": 1.0, "y": 1.0}
+        model = {
+            "ideology_terms": {"A": dict(terms), "B": dict(terms), "C": dict(terms)},
+            "graph_edges": [],
+        }
+        scores = classify(["x", "y"], model, method="jaccard")
+        assert scores["A"] == pytest.approx(scores["B"], abs=1e-9)
+        assert scores["B"] == pytest.approx(scores["C"], abs=1e-9)
+    
+    def test_jaccard_model_with_no_graph_edges(self):
+        """Jaccard funciona sem graph_edges no modelo."""
+        model = {
+            "ideology_terms": {
+                "esquerda": {"trabalho": 0.9, "sindicato": 0.8},
+                "direita": {"mercado": 0.9, "privatizar": 0.8},
+            },
+            "graph_edges": [],
+        }
+        scores = classify(["trabalho", "sindicato"], model, method="jaccard")
+        assert scores["esquerda"] > scores["direita"]
+    
+    def test_very_long_terms_list(self):
+        """Lista de 10.000 termos (todos no modelo) não deve ser lenta ou falhar."""
+        ideology_terms = {f"t{i}": float(i) for i in range(10000)}
+        model = {
+            "ideology_terms": {"grande": ideology_terms},
+            "graph_edges": [],
+        }
+        terms = [f"t{i}" for i in range(10000)]
+        scores = classify(terms, model, method="jaccard")
+        assert scores["grande"] == pytest.approx(1.0)
+    
+    def test_duplicate_terms_in_list(self):
+        """Termos duplicados na lista de entrada: Jaccard usa set() internamente."""
+        model = {
+            "ideology_terms": {
+                "A": {"mercado": 1.0},
+                "B": {"saúde": 1.0},
+            },
+            "graph_edges": [],
+        }
+        # "mercado" repetido 100x: deve se comportar igual a ["mercado"]
+        terms_repeated = ["mercado"] * 100
+        terms_single = ["mercado"]
+        s1 = classify(terms_repeated, model, method="jaccard")
+        s2 = classify(terms_single, model, method="jaccard")
+        assert s1["A"] == pytest.approx(s2["A"])
 
 
 class TestScoreDocumentGraph:
