@@ -37,7 +37,7 @@ src/
   graph_build/            vocabulário, contagem de coocorrências, ponderação
   analysis/               BFS/DFS, Kruskal, Brandes, Dijkstra, Girvan-Newman
   model/                  ancoragem de comunidades e serialização do modelo
-  scoring/                classificação por Jaccard ou Dijkstra
+  scoring/                classificação por co-ocorrência de grafo (padrão) ou Jaccard
   viz/                    geração de imagens
 scripts/
   generate_corpus.py      gera corpus sintético de treino
@@ -84,8 +84,8 @@ A ordem de commits reflete a ordem de dependências do sistema, algoritmo por al
 
 ```bash
 git clone <url-do-repositório>
-cd ed2_grafos
-pip install -e .
+cd enquadramento-ideologico
+pip install -r requirements.txt
 ```
 
 ### Passo 2 — (Opcional) Instale o modelo de linguagem do spaCy
@@ -141,13 +141,28 @@ Também são geradas duas imagens em `outputs/figures/`:
 - `exemplo.png` — subgrafo colorido por ideologia
 - `exemplo_bars.png` — gráfico de barras da distribuição
 
-### Método alternativo de classificação
+### Métodos de classificação
+
+O método padrão é `graph`, que usa o grafo de co-ocorrência do próprio documento:
 
 ```bash
-python scripts/classify.py data/examples/exemplo.txt --method dijkstra
+python scripts/classify.py data/examples/exemplo.txt --method graph
 ```
 
-O método padrão é `jaccard` (sobreposição de termos). O método `dijkstra` usa distância no grafo e tende a ser mais lento, mas considera a estrutura de conexões.
+O método legado `jaccard` considera apenas presença e ausência de termos, ignorando como eles se relacionam no texto:
+
+```bash
+python scripts/classify.py data/examples/exemplo.txt --method jaccard
+```
+
+**Diferença entre os métodos com `exemplo.txt`:**
+
+```
+jaccard  →  neoliberal 70.1%  conservador 11.9%  progressista 11.5%  ancap  6.5%
+graph    →  neoliberal 54.9%  conservador 15.0%  progressista 15.0%  ancap 15.0%
+```
+
+O método `graph` é mais criterioso: exige que os termos ideológicos co-ocorram nas mesmas janelas de contexto, não apenas que apareçam no texto. Um discurso que usa vocabulário neoliberal de forma isolada e dispersa pontua menos do que um texto em que esses termos se agrupam semanticamente.
 
 ### Executar os testes
 
@@ -223,6 +238,21 @@ Depois reconstrua o modelo para ver o efeito.
 
 ---
 
+## Avanços recentes
+
+### Scorer por grafo de co-ocorrência do documento (Fase B)
+
+O classificador original (`jaccard`) tratava o documento como um saco de palavras: comparava apenas quais termos apareciam no texto, sem considerar como eles se relacionavam entre si.
+
+O novo scorer padrão (`graph`) constrói um grafo de co-ocorrência do próprio documento a partir das janelas deslizantes geradas pelo pipeline — a mesma estrutura usada para construir o modelo de referência na Fase A. Para cada ideologia, o score combina:
+
+- **node_score**: centralidade de referência dos termos ideológicos presentes no documento.
+- **edge_score**: soma dos pesos das arestas do doc_graph entre pares de termos da mesma ideologia, ponderada pela centralidade de referência de cada ponta.
+
+Isso significa que termos ideológicos que co-ocorrem na mesma janela de contexto contribuem mais do que termos dispersos ao longo do texto. O método está implementado em `src/scoring/doc_graph.py` e `src/scoring/classifier.py`, com 11 novos testes em `tests/test_scoring.py`.
+
+---
+
 ## Limitações e potenciais melhorias
 
 ### 1. Testes de software
@@ -238,7 +268,7 @@ Os testes cobrem as estruturas de dados e os algoritmos individualmente, mas fal
 
 Co-ocorrência de palavras é uma aproximação superficial da semântica. Os problemas mais sérios:
 
-- **Ironia e contra-discurso**: um texto comunista que critica termos libertários pode pontuar para libertarianismo
+- **Ironia e contra-discurso**: um texto comunista que critica termos libertários pode pontuar para libertarianismo, embora o scorer `graph` mitigue parcialmente esse problema ao exigir que os termos co-ocorram entre si
 - **Ordem das palavras não existe**: o modelo trata o texto como um saco de palavras dentro de janelas
 - O **Girvan-Newman** tem custo O(V · E²) e fica lento para grafos maiores; a alternativa `label_propagation` disponível no código é muito mais rápida
 - O número de comunidades (`max_communities`) é ajustado manualmente e afeta muito o resultado final

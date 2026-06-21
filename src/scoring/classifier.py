@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-import math
 from typing import Any
 
-from src.datastructures.graph import Graph
-from src.analysis.shortest_path import dijkstra
+from src.scoring.doc_graph import build_doc_graph
 
 
 def score_document_jaccard(
@@ -20,10 +18,11 @@ def score_document_jaccard(
                    ─────────────────────────────────────────────────
                    Σ centralidade(t)  para t ∈ (doc ∪ ideologia)
 
-    Os scores são normalizados para somar 1 (distribuição de probabilidade).
+    Considera apenas presença/ausência dos termos no documento — não usa
+    a estrutura de co-ocorrência do texto novo.
 
     Args:
-        terms: Lista de termos do documento (após pipeline sem janelas).
+        terms: Lista de termos únicos do documento (após pipeline).
         model: Modelo de referência (saída de build_reference_model).
 
     Returns:
@@ -39,76 +38,60 @@ def score_document_jaccard(
         union = doc_set | ideo_set
 
         num = sum(term_scores.get(t, 0.0) for t in intersection)
-        # Para termos do doc que não estão no modelo, score = 0.
         denom = sum(term_scores.get(t, 0.0) for t in union if t in term_scores)
         raw_scores[ideology] = num / denom if denom > 0 else 0.0
 
     return _normalize(raw_scores)
 
 
-def score_document_dijkstra(
-    terms: list[str],
+def score_document_graph(
+    windows: list[list[str]],
     model: dict[str, Any],
 ) -> dict[str, float]:
-    """Pontua um documento usando distância mínima (Dijkstra) no grafo de referência.
+    """Pontua um documento usando o grafo de co-ocorrência das suas janelas.
 
-    Para cada ideologia, calcula a distância mínima média dos termos do
-    documento às sementes da ideologia no grafo de referência.
-    Distâncias menores → maior afinidade. O score é o inverso da distância
-    (normalizado).
+    Constrói um grafo do próprio documento e, para cada ideologia, combina:
+      - node_score: soma da centralidade de referência dos termos ideológicos
+        presentes no documento.
+      - edge_score: soma dos pesos das arestas do doc_graph entre pares de
+        termos da mesma ideologia, ponderada pela centralidade de referência
+        de cada ponta.
+
+    Termos ideológicos que co-ocorrem juntos no documento (mesma janela)
+    contribuem mais do que termos dispersos em parágrafos distantes.
 
     Args:
-        terms: Lista de termos do documento.
+        windows: Janelas deslizantes do documento (saída de process_document).
         model: Modelo de referência.
 
     Returns:
         Dicionário {ideologia: probabilidade} normalizado para soma 1.
     """
-    # Reconstrói grafo a partir das arestas do modelo.
-    graph = Graph()
-    for u, v, w in model["graph_edges"]:
-        graph.set_edge(u, v, w)
-
+    doc_graph = build_doc_graph(windows)
     ideology_terms: dict[str, dict[str, float]] = model["ideology_terms"]
-    doc_set = set(terms)
+    doc_vertices = set(doc_graph.vertices())
     raw_scores: dict[str, float] = {}
 
     for ideology, term_scores in ideology_terms.items():
-        ideo_vertices = set(term_scores.keys()) & set(graph.vertices())
-        doc_in_graph = doc_set & set(graph.vertices())
+        overlap = list(doc_vertices & set(term_scores.keys()))
 
-        if not ideo_vertices or not doc_in_graph:
-            raw_scores[ideology] = 0.0
-            continue
+        node_score = sum(term_scores[t] for t in overlap)
 
-        total_inv_dist = 0.0
-        count = 0
+        edge_score = 0.0
+        for i, u in enumerate(overlap):
+            for j in range(i + 1, len(overlap)):
+                v = overlap[j]
+                w = doc_graph.edge_weight(u, v)
+                if w > 0:
+                    edge_score += w * term_scores[u] * term_scores[v]
 
-        for doc_term in doc_in_graph:
-            dist, _ = dijkstra(graph, doc_term)
-            for ideo_term in ideo_vertices:
-                d = dist.get(ideo_term, math.inf)
-                if not math.isinf(d) and d > 0:
-                    total_inv_dist += 1.0 / d
-                    count += 1
-                elif d == 0:
-                    total_inv_dist += 10.0  # mesmo nó → afinidade máxima
-                    count += 1
-
-        raw_scores[ideology] = total_inv_dist / count if count > 0 else 0.0
+        raw_scores[ideology] = node_score + edge_score
 
     return _normalize(raw_scores)
 
 
 def _normalize(scores: dict[str, float]) -> dict[str, float]:
-    """Normaliza um dicionário de scores para que a soma seja 1.
-
-    Args:
-        scores: Scores brutos por ideologia.
-
-    Returns:
-        Dicionário normalizado; se todos zero, retorna distribuição uniforme.
-    """
+    """Normaliza scores para soma 1; retorna distribuição uniforme se todos zero."""
     total = sum(scores.values())
     if total <= 0:
         n = len(scores)
@@ -117,16 +100,17 @@ def _normalize(scores: dict[str, float]) -> dict[str, float]:
 
 
 def classify(
-    terms: list[str],
+    windows: list[list[str]],
     model: dict[str, Any],
-    method: str = "jaccard",
+    method: str = "graph",
 ) -> dict[str, float]:
     """Classifica um documento e retorna distribuição de ideologias.
 
     Args:
-        terms: Termos do documento (pós-pipeline, sem janelas).
+        windows: Janelas deslizantes do documento (saída de process_document).
         model: Modelo de referência.
-        method: "jaccard" ou "dijkstra".
+        method: "graph" (padrão) usa co-ocorrência do documento;
+                "jaccard" usa apenas presença/ausência de termos.
 
     Returns:
         Dicionário {ideologia: probabilidade} normalizado.
@@ -134,9 +118,10 @@ def classify(
     Raises:
         ValueError: Se o método for desconhecido.
     """
-    if method == "jaccard":
+    if method == "graph":
+        return score_document_graph(windows, model)
+    elif method == "jaccard":
+        terms = list({tok for win in windows for tok in win})
         return score_document_jaccard(terms, model)
-    elif method == "dijkstra":
-        return score_document_dijkstra(terms, model)
     else:
         raise ValueError(f"Método desconhecido: {method!r}")
