@@ -24,34 +24,73 @@ def _get_nlp():
     return _nlp
 
 
+@lru_cache(maxsize=8192)
+def _lemma_one(token: str) -> str:
+    """Lematiza um único token (com cache para reaproveitar termos repetidos).
+
+    Lematizar token a token garante alinhamento posicional — essencial para
+    reinserir, nas posições corretas, os tokens que não devem ser lematizados.
+    """
+    nlp = _get_nlp()
+    doc = nlp(token)
+    if len(doc) == 0:
+        return token
+    return doc[0].lemma_.lower().strip()
+
+
 def lemmatize_tokens(tokens: list[str]) -> list[str]:
     """Lematiza uma lista de tokens usando spaCy.
 
-    Processa os tokens como um único "documento" para aproveitar o pipeline
-    vetorizado do spaCy. Tokens numéricos ou com um único caractere são
-    descartados após a lematização.
+    Tokens com underscore (marcadores multipalavra como ``livre_mercado`` e
+    termos negados como ``nao_privatização``) são preservados sem alteração:
+    o lematizador do spaCy os corromperia (ex.: ``livre_mercado`` ->
+    ``livre_mercar``), quebrando o casamento com as sementes. Tokens numéricos
+    ou de um único caractere são descartados.
 
     Args:
         tokens: Lista de tokens (strings) a lematizar.
 
     Returns:
-        Lista de lemas, filtrando tokens inválidos.
+        Lista de lemas, filtrando tokens inválidos e preservando marcadores.
     """
     if not tokens:
         return []
-    nlp = _get_nlp()
-    # Alimenta o modelo com os tokens já pré-tokenizados.
-    doc = nlp.make_doc(" ".join(tokens))
-    # Processa apenas o componente de lematização (morphologizer/tagger).
-    for _, proc in nlp.pipeline:
-        doc = proc(doc)
-
     result: list[str] = []
-    for token in doc:
-        lemma = token.lemma_.lower().strip()
-        if lemma and not token.is_punct and not token.like_num and len(lemma) > 1:
+    for token in tokens:
+        if "_" in token:
+            result.append(token)  # marcador / negação — não lematizar
+            continue
+        lemma = _lemma_one(token)
+        if lemma and not lemma.isdigit() and len(lemma) > 1:
             result.append(lemma)
     return result
+
+
+def lemmatize_seeds(seeds: dict[str, list[str]]) -> dict[str, list[str]]:
+    """Aplica a mesma lematização dos documentos às sementes de cada ideologia.
+
+    Quando o corpus é lematizado, os vértices do grafo ficam em forma de lema
+    (ex.: ``empresas`` -> ``empresa``, ``imposto`` -> ``impor``). As sementes
+    precisam passar pela MESMA transformação, senão deixam de casar com os
+    termos do grafo e a ancoragem falha. Marcadores com underscore são
+    preservados (ver `lemmatize_tokens`).
+
+    Args:
+        seeds: Dicionário {ideologia: [sementes]}.
+
+    Returns:
+        Dicionário com as sementes lematizadas (sem duplicatas, ordem mantida).
+    """
+    out: dict[str, list[str]] = {}
+    for ideology, terms in seeds.items():
+        seen: set[str] = set()
+        lemmas: list[str] = []
+        for lemma in lemmatize_tokens(terms):
+            if lemma not in seen:
+                seen.add(lemma)
+                lemmas.append(lemma)
+        out[ideology] = lemmas
+    return out
 
 
 def lemmatize_tokens_simple(tokens: list[str]) -> list[str]:
