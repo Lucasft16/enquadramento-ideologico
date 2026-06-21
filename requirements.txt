@@ -1,12 +1,5 @@
-# Dependências da Fase 2 (pré-processamento / parser)
-spacy==3.8.14
-click==8.4.1          # dependência do CLI do spaCy (não veio automaticamente)
-
-# Modelo de português. Opção A (recomendada) — instalar via CLI do spaCy:
-#   python -m spacy download pt_core_news_sm
-#
-# Opção B — instalar direto pelo requirements (descomente a linha abaixo):
-# pt_core_news_sm @ https://github.com/explosion/spacy-models/releases/download/pt_core_news_sm-3.8.0/pt_core_news_sm-3.8.0-py3-none-any.whl
-#
-# Para lemas melhores (ex.: "destroem" -> "destruir"), use o modelo médio:
-#   python -m spacy download pt_core_news_md
+spacy>=3.7
+matplotlib>=3.8
+pyvis>=0.3
+pyyaml>=6.0
+pytest>=8.0
