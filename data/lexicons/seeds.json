@@ -2,21 +2,43 @@
   "neoliberal": [
     "mercado", "privatização", "eficiência", "competitividade", "reforma",
     "fiscal", "ajuste", "austeridade", "liberalização", "desregulação",
-    "capital", "investimento", "produtividade", "exportação", "crescimento"
+    "capital", "investimento", "produtividade", "exportação", "crescimento",
+    "livre_comércio", "economia_de_mercado", "setor_privado"
   ],
   "progressista": [
     "desigualdade", "redistribuição", "direitos", "saúde", "educação",
     "moradia", "trabalhador", "sindicato", "proteção", "social",
-    "público", "gratuidade", "inclusão", "vulnerável", "pobre"
+    "público", "gratuidade", "inclusão", "vulnerável", "pobre",
+    "sistema_único_de_saúde", "direitos_humanos", "direito_à_moradia"
   ],
   "conservador": [
     "família", "tradição", "valores", "ordem", "segurança",
     "autoridade", "religião", "nação", "pátria", "identidade",
-    "costumes", "moral", "disciplina", "responsabilidade", "hierarquia"
+    "costumes", "moral", "disciplina", "responsabilidade", "hierarquia",
+    "segurança_pública"
   ],
   "ancap": [
     "liberdade", "propriedade", "voluntário", "contrato", "anarquia",
-    "monopolio", "força", "coerção", "livre_mercado", "estatismo",
-    "imposto", "regulação", "intervenção", "autônomo", "agência"
+    "monopólio", "força", "coerção", "livre_mercado", "estatismo",
+    "imposto", "regulação", "intervenção", "autônomo", "agência",
+    "estado_mínimo", "propriedade_privada"
+  ],
+  "comunismo": [
+    "proletariado", "burguesia", "revolução", "exploração", "coletivização",
+    "estatização", "socialismo", "comunismo", "expropriação", "vanguarda",
+    "classe", "capitalismo", "opressão", "planificação", "camarada",
+    "economia_planificada", "propriedade_coletiva"
+  ],
+  "social-democracia": [
+    "reformismo", "welfare", "seguridade", "conciliação", "pacto",
+    "negociação", "gradualismo", "concertação", "parceria", "cidadania",
+    "cooperação", "equilíbrio", "regulamentação", "mediação", "reformista",
+    "bem_estar_social", "previdência_social"
+  ],
+  "trabalhismo": [
+    "trabalho", "emprego", "salário", "valorização", "clt",
+    "trabalhista", "desenvolvimentismo", "nacionalismo", "industrialização", "getulismo",
+    "dignidade", "sindicalismo", "corporativismo", "assistência", "operário",
+    "salário_mínimo", "reforma_trabalhista"
   ]
 }

@@ -45,15 +45,24 @@ def build_ideology_term_map(
     communities: list[list[str]],
     assignment: dict[int, str],
     centrality_scores: dict[str, float],
+    seeds: dict[str, list[str]] | None = None,
 ) -> dict[str, dict[str, float]]:
     """Constrói o mapa {ideologia → {termo: centralidade}} a partir das comunidades.
 
     Termos que aparecem em múltiplas comunidades recebem o maior score.
 
+    Prioridade de semente: se `seeds` for fornecido, todo termo declarado como
+    semente de uma ideologia é atribuído a ELA, independentemente da comunidade
+    em que caiu (e removido de qualquer outra). Sem isso, a detecção imperfeita
+    de comunidades espalha sementes — ex.: "desregulação" (semente neoliberal)
+    cair numa comunidade rotulada "social-democracia" faria um texto neoliberal
+    pontuar para social-democracia.
+
     Args:
         communities: Lista de comunidades (listas de termos).
         assignment: Mapa {índice_comunidade: ideologia} de anchor_communities.
         centrality_scores: Mapa {termo: pontuação} de centralidade.
+        seeds: Opcional {ideologia: [sementes]} para forçar a posse das sementes.
 
     Returns:
         Dicionário aninhado {ideologia: {termo: pontuação}}.
@@ -69,5 +78,16 @@ def build_ideology_term_map(
             existing = ideology_map[ideology].get(term, -1.0)
             if score > existing:
                 ideology_map[ideology][term] = score
+
+    # Prioridade de semente: cada semente pertence à sua própria ideologia.
+    if seeds:
+        for ideology, seed_terms in seeds.items():
+            for term in seed_terms:
+                if term not in centrality_scores:
+                    continue  # semente ausente do grafo (não apareceu no corpus)
+                for other, term_map in ideology_map.items():
+                    if other != ideology:
+                        term_map.pop(term, None)
+                ideology_map.setdefault(ideology, {})[term] = centrality_scores[term]
 
     return ideology_map
