@@ -1,7 +1,7 @@
 """FASE B — Classifica um documento novo e gera visualização do subgrafo colorido.
 
 Execução:
-    python scripts/classify.py data/examples/exemplo.txt [--model CAMINHO] [--method jaccard]
+    python scripts/classify.py data/examples/exemplo.txt [--model CAMINHO] [--method graph|jaccard]
 
 Saída:
     Distribuição ideológica impressa no terminal.
@@ -24,6 +24,7 @@ from src.parser.pipeline import process_document
 from src.model.reference_model import load
 from src.scoring.classifier import classify
 from src.viz.render import render_document_subgraph, render_score_bar
+from src.viz.render_interactive import render_doc_graph_html
 
 
 def load_trie(markers_path: Path) -> Trie:
@@ -53,9 +54,9 @@ def main() -> None:
     )
     parser.add_argument(
         "--method",
-        choices=["jaccard"],
-        default="jaccard",
-        help="Método de classificação.",
+        choices=["jaccard", "graph"],
+        default="graph",
+        help="Método de classificação: 'graph' (padrão) usa co-ocorrência do documento; 'jaccard' usa apenas presença de termos.",
     )
     parser.add_argument(
         "--out-dir",
@@ -99,12 +100,14 @@ def main() -> None:
         window_size=cfg["window_size"],
         use_lemmatizer=False,
     )
-    # Extrai todos os termos únicos do documento (sem janelas).
+    # Extrai termos únicos para visualização do subgrafo.
     all_terms: list[str] = list({tok for win in windows for tok in win})
     print(f"Termos unicos no documento: {len(all_terms)}")
+    print(f"Janelas geradas: {len(windows)}")
 
-    # 4. Classifica
-    scores = classify(all_terms, model, method=args.method)
+    # 4. Classifica (passa as janelas — o método 'graph' usa co-ocorrência;
+    #    o método 'jaccard' extrai os termos internamente)
+    scores = classify(windows, model, method=args.method)
 
     # 5. Exibe resultado
     print("\n" + "=" * 50)
@@ -130,6 +133,10 @@ def main() -> None:
     bars_path = out_dir / f"{stem}_bars.png"
     render_score_bar(scores, bars_path, title=f"Distribuição — {doc_path.name}")
     print(f"Gráfico de barras salvo em: {bars_path}")
+
+    html_path = out_dir / f"{stem}_grafo.html"
+    render_doc_graph_html(windows, model, html_path)
+    print(f"Grafo interativo salvo em: {html_path}")
 
 
 if __name__ == "__main__":

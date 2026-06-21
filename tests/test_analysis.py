@@ -130,6 +130,71 @@ class TestFiltering:
         filtered = disparity_filter(g, alpha=0.1)
         assert isinstance(filtered, Graph)
         assert filtered.num_vertices() == g.num_vertices()
+        
+    def test_kruskal_empty_graph(self):
+        """max_spanning_backbone de grafo vazio → grafo vazio."""
+        from src.datastructures.graph import Graph
+        from src.analysis.filtering import max_spanning_backbone
+        g = Graph()
+        result = max_spanning_backbone(g)
+        assert result.num_vertices() == 0
+        assert result.num_edges() == 0
+    
+    def test_kruskal_single_edge(self):
+        """Grafo com 1 aresta: backbone tem a mesma aresta."""
+        from src.datastructures.graph import Graph
+        from src.analysis.filtering import max_spanning_backbone
+        g = Graph()
+        g.set_edge("a", "b", 1.0)
+        result = max_spanning_backbone(g)
+        assert result.has_edge("a", "b")
+        assert result.num_edges() == 1
+    
+    def test_kruskal_isolated_vertices_preserved(self):
+        """Vértices isolados devem aparecer no backbone (sem arestas)."""
+        from src.datastructures.graph import Graph
+        from src.analysis.filtering import max_spanning_backbone
+        g = Graph()
+        g.add_vertex("solo")
+        g.set_edge("a", "b", 1.0)
+        result = max_spanning_backbone(g)
+        assert "solo" in result.vertices()
+    
+    def test_threshold_filter_empty_graph(self):
+        """threshold_filter de grafo vazio → grafo vazio."""
+        from src.datastructures.graph import Graph
+        from src.analysis.filtering import threshold_filter
+        g = Graph()
+        result = threshold_filter(g, threshold=0.5)
+        assert result.num_edges() == 0
+    
+    def test_threshold_filter_removes_all(self):
+        """threshold muito alto → remove todas as arestas, mantém vértices."""
+        from src.datastructures.graph import Graph
+        from src.analysis.filtering import threshold_filter
+        g = Graph()
+        g.set_edge("a", "b", 0.1)
+        result = threshold_filter(g, threshold=999.0)
+        assert result.num_edges() == 0
+        assert "a" in result.vertices()
+    
+    def test_disparity_filter_empty_graph(self):
+        """disparity_filter de grafo vazio → grafo vazio."""
+        from src.datastructures.graph import Graph
+        from src.analysis.filtering import disparity_filter
+        g = Graph()
+        result = disparity_filter(g, alpha=0.05)
+        assert result.num_edges() == 0
+    
+    def test_disparity_filter_degree_one_keeps_edge(self):
+        """Vértice de grau 1: sua única aresta sempre é mantida."""
+        from src.datastructures.graph import Graph
+        from src.analysis.filtering import disparity_filter
+        g = Graph()
+        g.set_edge("a", "b", 1.0)  # ambos têm grau 1
+        result = disparity_filter(g, alpha=0.05)
+        assert result.has_edge("a", "b")
+
 
 
 # ─────────────────────────────────────────────
@@ -176,6 +241,58 @@ class TestCentrality:
 
     def test_top_k_zero_returns_empty(self):
         assert top_k({"a": 1.0}, k=0) == []
+        
+    def test_degree_centrality_empty_graph(self):
+        """degree_centrality de grafo vazio → dicionário vazio."""
+        from src.datastructures.graph import Graph
+        from src.analysis.centrality import degree_centrality
+        g = Graph()
+        assert degree_centrality(g) == {}
+    
+    def test_degree_centrality_single_vertex(self):
+        """Grafo com 1 vértice isolado → centralidade 0.0 (n-1 = 0, guarda divisão)."""
+        from src.datastructures.graph import Graph
+        from src.analysis.centrality import degree_centrality
+        g = Graph()
+        g.add_vertex("solo")
+        dc = degree_centrality(g)
+        assert dc["solo"] == 0.0
+    
+    def test_betweenness_empty_graph(self):
+        """betweenness_brandes de grafo vazio → dicionário vazio."""
+        from src.datastructures.graph import Graph
+        from src.analysis.centrality import betweenness_brandes
+        g = Graph()
+        assert betweenness_brandes(g) == {}
+    
+    def test_betweenness_two_vertices(self):
+        """2 vértices: intermediação de ambos deve ser 0.0 (n <= 2, sem normalização)."""
+        from src.datastructures.graph import Graph
+        from src.analysis.centrality import betweenness_brandes
+        g = Graph()
+        g.set_edge("a", "b", 1.0)
+        cb = betweenness_brandes(g)
+        assert cb["a"] == pytest.approx(0.0)
+        assert cb["b"] == pytest.approx(0.0)
+    
+    def test_top_k_more_than_available(self):
+        """k maior que o número de itens → retorna todos os itens disponíveis."""
+        from src.analysis.centrality import top_k
+        scores = {"a": 1.0, "b": 2.0}
+        result = top_k(scores, k=100)
+        assert len(result) == 2
+    
+    def test_top_k_empty_scores(self):
+        """top_k com scores vazio → lista vazia."""
+        from src.analysis.centrality import top_k
+        assert top_k({}, k=5) == []
+    
+    def test_top_k_all_same_score(self):
+        """top_k com todos os scores iguais → retorna k itens."""
+        from src.analysis.centrality import top_k
+        scores = {str(i): 1.0 for i in range(10)}
+        result = top_k(scores, k=3)
+        assert len(result) == 3
 
 
 # ─────────────────────────────────────────────
