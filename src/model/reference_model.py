@@ -13,7 +13,12 @@ from src.graph_build.weighting import build_weighted_graph
 from src.analysis.filtering import max_spanning_backbone, threshold_filter, disparity_filter
 from src.analysis.communities import detect_communities, label_propagation
 from src.analysis.centrality import degree_centrality, betweenness_brandes
-from src.model.anchoring import anchor_communities, build_ideology_term_map
+from src.model.anchoring import (
+    anchor_communities,
+    anchor_communities_supervised,
+    compute_label_votes,
+    build_ideology_term_map,
+)
 
 
 def build_reference_model(
@@ -25,6 +30,8 @@ def build_reference_model(
     threshold: float = 0.1,
     disparity_alpha: float = 0.05,
     max_communities: int = 10,
+    doc_labels: list[str] | None = None,
+    label_weight: float = 0.5,
 ) -> dict[str, Any]:
     """Constrói o modelo de referência a partir das janelas de coocorrência do corpus.
 
@@ -34,8 +41,13 @@ def build_reference_model(
     3. Ponderação do grafo.
     4. Filtragem do grafo.
     5. Detecção de comunidades.
-    6. Ancoragem por sementes.
+    6. Ancoragem por sementes (e por rótulos supervisionados, se fornecidos).
     7. Centralidade por comunidade.
+
+    Quando ``doc_labels`` é fornecido (lista de ideologias por documento),
+    o modelo usa treino supervisionado: os rótulos reais do corpus reforçam a
+    ancoragem das comunidades às ideologias, combinando seeds com a distribuição
+    empírica de termos por ideologia.
 
     Args:
         docs_windows: Janelas por documento (saída do pipeline parser por documento).
@@ -45,7 +57,14 @@ def build_reference_model(
         community_method: "girvan_newman" | "label_propagation".
         threshold: Limiar para threshold_filter.
         disparity_alpha: Alpha para disparity_filter.
-        max_communities: Limite máximo de comunidades (Girvan-Newman).
+        max_communities: Teto máximo de comunidades para Girvan-Newman.
+            O critério principal de parada é a modularidade; este parâmetro
+            é apenas um limite de segurança.
+        doc_labels: Lista de rótulos ideológicos, um por documento (mesmo
+            tamanho que ``docs_windows``). Quando fornecido, ativa o treino
+            supervisionado. Quando None, usa apenas seeds (comportamento original).
+        label_weight: Peso dos rótulos supervisionados vs. seeds na ancoragem.
+            0.0 = apenas seeds, 1.0 = apenas rótulos. Padrão: 0.5.
 
     Returns:
         Dicionário do modelo com campos:
@@ -54,6 +73,7 @@ def build_reference_model(
           - "communities": lista de listas de termos.
           - "assignment": {str(índice) → ideologia}.
           - "vocab_size": tamanho do vocabulário.
+          - "supervised": True se rótulos foram usados, False caso contrário.
     """
     # 1 & 2. Vocabulário e coocorrências
     vocab = build_vocab_from_windows(docs_windows)
@@ -80,7 +100,20 @@ def build_reference_model(
         communities = label_propagation(filtered)
 
     # 6. Ancoragem
-    assignment = anchor_communities(communities, seeds)
+    supervised = doc_labels is not None and len(doc_labels) == len(docs_windows)
+
+    if supervised:
+        # Treino supervisionado: combina seeds + rótulos do corpus.
+        label_votes = compute_label_votes(communities, docs_windows, doc_labels)
+        assignment = anchor_communities_supervised(
+            communities,
+            seeds,
+            label_votes,
+            label_weight=label_weight,
+        )
+    else:
+        # Comportamento original: apenas seeds.
+        assignment = anchor_communities(communities, seeds)
 
     # 7. Centralidade
     centrality = degree_centrality(filtered)
@@ -94,6 +127,7 @@ def build_reference_model(
         "communities": communities,
         "assignment": {str(k): v for k, v in assignment.items()},
         "vocab_size": len(vocab),
+        "supervised": supervised,
     }
 
 

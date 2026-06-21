@@ -13,6 +13,7 @@ import argparse
 import json
 import sys
 import time
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
@@ -74,6 +75,20 @@ def main() -> None:
         default=str(ROOT / "config.yaml"),
         help="Caminho do config.yaml.",
     )
+    parser.add_argument(
+        "--label-weight",
+        type=float,
+        default=0.5,
+        help=(
+            "Peso dos rótulos do corpus vs. seeds na ancoragem supervisionada "
+            "(0.0 = apenas seeds, 1.0 = apenas rótulos; padrão: 0.5)."
+        ),
+    )
+    parser.add_argument(
+        "--no-supervision",
+        action="store_true",
+        help="Ignora os rótulos do corpus e usa apenas as seeds (comportamento original).",
+    )
     args = parser.parse_args()
 
     cfg = load_config(args.config)
@@ -89,13 +104,31 @@ def main() -> None:
     docs = load_corpus(corpus_path)
     print(f"Corpus carregado: {len(docs)} documentos")
 
-    # 2. Carrega seeds e Trie
+    # 2. Extrai rótulos (campo "ideology") quando disponíveis
+    doc_labels: list[str] | None = None
+    if not args.no_supervision:
+        labels = [doc.get("ideology") for doc in docs]
+        if all(lbl is not None for lbl in labels):
+            doc_labels = labels  # type: ignore[assignment]
+            counts = Counter(doc_labels)
+            print("Rótulos encontrados — treino supervisionado ativado:")
+            for ideology, cnt in sorted(counts.items()):
+                print(f"  {ideology}: {cnt} documentos")
+            print(f"  label_weight={args.label_weight}")
+        else:
+            missing = sum(1 for lbl in labels if lbl is None)
+            print(
+                f"[AVISO] {missing}/{len(docs)} documentos sem campo 'ideology'. "
+                "Usando apenas seeds (modo não-supervisionado)."
+            )
+
+    # 3. Carrega seeds e Trie
     with open(args.seeds, "r", encoding="utf-8") as fh:
         seeds: dict[str, list[str]] = json.load(fh)
     trie = load_trie(Path(args.markers))
     print(f"Seeds: {list(seeds.keys())}")
 
-    # 3. Processa documentos → janelas
+    # 4. Processa documentos → janelas
     print("Processando documentos (sem lematizador spaCy)...")
     docs_windows: list[list[list[str]]] = []
     for i, doc in enumerate(docs):
@@ -112,7 +145,7 @@ def main() -> None:
     total_windows = sum(len(w) for w in docs_windows)
     print(f"Total de janelas: {total_windows}")
 
-    # 4. Constrói modelo
+    # 5. Constrói modelo
     print(f"Construindo modelo (peso={cfg['weight_method']}, "
           f"filtro={cfg['filter_method']}, "
           f"comunidades={cfg['community_method']})...")
@@ -126,9 +159,11 @@ def main() -> None:
         threshold=cfg["threshold"],
         disparity_alpha=cfg.get("disparity_alpha", 0.05),
         max_communities=len(seeds) + 2,
+        doc_labels=doc_labels,
+        label_weight=args.label_weight,
     )
 
-    # 5. Salva
+    # 6. Salva
     save(model, args.out)
     elapsed = time.time() - t0
 
@@ -137,6 +172,7 @@ def main() -> None:
     print(f"  Arestas no grafo filtrado: {len(model['graph_edges'])}")
     print(f"  Comunidades detectadas: {len(model['communities'])}")
     print(f"  Ideologias: {list(model['ideology_terms'].keys())}")
+    print(f"  Treino supervisionado: {'sim' if model.get('supervised') else 'não'}")
     print(f"  Tempo: {elapsed:.1f}s")
 
 
