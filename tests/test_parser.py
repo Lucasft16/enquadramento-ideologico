@@ -247,28 +247,28 @@ class TestPipelineWithoutSpacy:
         """Texto só com dígitos → lemmatize_simple filtra → sem janelas."""
         windows = process_document("1 2 3 4 5", use_lemmatizer=False, window_size=2)
         assert windows == []
-    
+
     def test_only_stopwords_produces_no_windows(self):
         """Texto só com stopwords → nenhum token sobrevivente → sem janelas."""
         text = "o e a de do para com em uma"
         windows = process_document(text, use_lemmatizer=False, window_size=3)
         assert windows == []
-    
+
     def test_single_content_word_produces_no_windows(self):
         """Um único token de conteúdo → não há par para coocorrência → sem janelas."""
         windows = process_document("mercado", use_lemmatizer=False, window_size=2)
         assert windows == []
-    
+
     def test_process_corpus_empty_list(self):
         """Corpus vazio → lista vazia."""
         result = process_corpus([], use_lemmatizer=False)
         assert result == []
-    
+
     def test_process_corpus_all_empty_docs(self):
         """Corpus com documentos vazios → cada um produz lista vazia."""
         result = process_corpus(["", "  ", "\t"], use_lemmatizer=False)
         assert all(doc == [] for doc in result)
-    
+
     def test_trie_match_phrase_not_in_vocab_after_collapse(self):
         """Token colapsado pela Trie deve aparecer como token único no resultado."""
         trie = Trie()
@@ -279,3 +279,80 @@ class TestPipelineWithoutSpacy:
         assert "reforma_agraria" in all_tokens
         assert "reforma" not in all_tokens
         assert "agraria" not in all_tokens
+
+
+class TestNegation:
+    """Testa a detecção de bigramas negativos."""
+
+    def _terms(self, text: str, **kwargs):
+        from src.parser.pipeline import process_document
+
+        windows = process_document(text, use_lemmatizer=False, window_size=3, **kwargs)
+        return {tok for w in windows for tok in w}
+
+    def test_negation_creates_distinct_term(self):
+        # "não privatização" não pode colapsar em "privatização".
+        terms = self._terms("defendemos não privatização agora mesmo sempre")
+        assert "nao_privatização" in terms
+        assert "privatização" not in terms
+
+    def test_affirmative_is_unchanged(self):
+        terms = self._terms("defendemos privatização total agora mesmo sempre")
+        assert "privatização" in terms
+        assert "nao_privatização" not in terms
+
+    def test_non_stopword_negator_is_consumed(self):
+        # "nunca" não é stopword: sem tratamento sobreviveria como token solto.
+        terms = self._terms("queremos nunca austeridade fiscal agora mesmo")
+        assert "nao_austeridade" in terms
+        assert "nunca" not in terms
+
+    def test_negation_skips_intervening_stopword(self):
+        # "não a privatização": o artigo intermediário é pulado.
+        terms = self._terms("somos contra não a privatização agora mesmo")
+        assert "nao_privatização" in terms
+
+    def test_negation_can_be_disabled(self):
+        terms = self._terms("defendemos não privatização agora mesmo", mark_negation=False)
+        assert "privatização" in terms
+        assert "nao_privatização" not in terms
+
+    def test_mark_negation_unit(self):
+        from src.parser.pipeline import _mark_negation
+
+        assert _mark_negation(["não", "privatização"]) == ["nao_privatização"]
+        assert _mark_negation(["mais", "estado"]) == ["mais", "estado"]
+        # Dupla negação encadeada: ambos negadores consumidos, alvo marcado uma vez.
+        assert _mark_negation(["não", "nunca", "imposto"]) == ["nao_imposto"]
+
+
+class TestSentenceAwarePipeline:
+    """Janelas não devem cruzar fronteiras de sentença (sentence_windows)."""
+
+    def test_split_sentences(self):
+        from src.parser.sanitize import split_sentences
+
+        assert split_sentences("Olá mundo. Tudo bem? Sim!") == ["Olá mundo", "Tudo bem", "Sim"]
+        assert split_sentences("uma linha\noutra linha") == ["uma linha", "outra linha"]
+        assert split_sentences("   ") == []
+
+    def test_windows_do_not_cross_sentences(self):
+        from src.parser.pipeline import process_document
+
+        text = "mercado eficiente gera lucro. estado controla produção coletiva"
+        wins = process_document(text, window_size=4, use_lemmatizer=False)
+        # Nenhuma janela mistura termos de frases diferentes.
+        assert not any("lucro" in w and "estado" in w for w in wins)
+
+    def test_multiword_marker_with_internal_stopword_forms(self):
+        # Trie roda antes das stopwords: marcadores com "de"/"à" se formam.
+        from src.parser.pipeline import process_document
+        from src.datastructures.trie import Trie
+
+        trie = Trie()
+        trie.insert("imposto de renda")
+        trie.insert("direito à moradia")
+        text = "o imposto de renda e o direito à moradia importam muito hoje"
+        toks = {t for w in process_document(text, trie=trie, window_size=5, use_lemmatizer=False) for t in w}
+        assert "imposto_de_renda" in toks
+        assert "direito_à_moradia" in toks

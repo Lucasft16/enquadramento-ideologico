@@ -122,21 +122,35 @@ def main() -> None:
                 "Usando apenas seeds (modo não-supervisionado)."
             )
 
+    # Lematização DESLIGADA: o lematizador PT do spaCy é pouco confiável para o
+    # vocabulário de domínio (gera lemas-lixo como "imposto"->"impor") e, no
+    # corpus sintético, adiciona ruído à classificação. O código de lematização
+    # (com proteção de marcadores e lematização consistente das sementes) está
+    # pronto em src/parser/lemmatize.py para uso futuro com textos reais — basta
+    # ligar aqui E em classify.py ao mesmo tempo (precisam casar).
+    USE_LEMMATIZER = False
+
     # 3. Carrega seeds e Trie
     with open(args.seeds, "r", encoding="utf-8") as fh:
         seeds: dict[str, list[str]] = json.load(fh)
+    if USE_LEMMATIZER:
+        # As sementes precisam passar pela mesma lematização dos documentos,
+        # senão deixam de casar com os vértices do grafo (ancoragem falharia).
+        from src.parser.lemmatize import lemmatize_seeds
+
+        seeds = lemmatize_seeds(seeds)
     trie = load_trie(Path(args.markers))
     print(f"Seeds: {list(seeds.keys())}")
 
     # 4. Processa documentos → janelas
-    print("Processando documentos (sem lematizador spaCy)...")
+    print(f"Processando documentos (lematizador={'spaCy' if USE_LEMMATIZER else 'simples'})...")
     docs_windows: list[list[list[str]]] = []
     for i, doc in enumerate(docs):
         windows = process_document(
             doc["text"],
             trie=trie,
             window_size=cfg["window_size"],
-            use_lemmatizer=False,  # rodar sem spaCy para compatibilidade
+            use_lemmatizer=USE_LEMMATIZER,
         )
         docs_windows.append(windows)
         if (i + 1) % 20 == 0:

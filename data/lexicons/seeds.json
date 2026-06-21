@@ -1,22 +1,26 @@
 {
-  "neoliberal": [
-    "mercado", "privatização", "eficiência", "competitividade", "reforma",
-    "fiscal", "ajuste", "austeridade", "liberalização", "desregulação",
-    "capital", "investimento", "produtividade", "exportação", "crescimento"
+  "libertarianismo": [
+    "liberdade", "propriedade", "voluntário", "contrato", "mercado",
+    "privatização", "eficiência", "competitividade", "desregulação", "autônomo",
+    "anarquia", "estatismo", "individualismo", "livre_mercado", "estado_mínimo",
+    "propriedade_privada", "livre_comércio", "economia_de_mercado"
   ],
-  "progressista": [
-    "desigualdade", "redistribuição", "direitos", "saúde", "educação",
-    "moradia", "trabalhador", "sindicato", "proteção", "social",
-    "público", "gratuidade", "inclusão", "vulnerável", "pobre"
-  ],
-  "conservador": [
+  "conservadorismo": [
     "família", "tradição", "valores", "ordem", "segurança",
     "autoridade", "religião", "nação", "pátria", "identidade",
-    "costumes", "moral", "disciplina", "responsabilidade", "hierarquia"
+    "costumes", "moral", "disciplina", "responsabilidade", "hierarquia",
+    "segurança_pública"
   ],
-  "ancap": [
-    "liberdade", "propriedade", "voluntário", "contrato", "anarquia",
-    "monopolio", "força", "coerção", "livre_mercado", "estatismo",
-    "imposto", "regulação", "intervenção", "autônomo", "agência"
+  "comunismo": [
+    "proletariado", "burguesia", "revolução", "exploração", "coletivização",
+    "estatização", "socialismo", "comunismo", "expropriação", "vanguarda",
+    "classe", "opressão", "planificação", "camarada", "economia_planificada",
+    "propriedade_coletiva"
+  ],
+  "social-democracia": [
+    "reformismo", "welfare", "seguridade", "redistribuição", "desigualdade",
+    "direitos", "saúde", "educação", "sindicato", "conciliação",
+    "gradualismo", "bem_estar_social", "previdência_social", "sistema_único_de_saúde",
+    "direitos_humanos", "salário_mínimo"
   ]
 }

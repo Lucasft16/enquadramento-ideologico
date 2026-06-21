@@ -94,6 +94,8 @@ def main() -> None:
 
     # 3. Processa
     trie = load_trie(Path(args.markers))
+    # Lematização DEVE casar com a usada em build_model.py (lá: desligada). Se os
+    # dois divergirem, os termos do texto não casam com os do modelo.
     windows = process_document(
         text,
         trie=trie,

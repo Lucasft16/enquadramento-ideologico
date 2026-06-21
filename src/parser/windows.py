@@ -44,5 +44,12 @@ def sentence_windows(
     """
     result: list[list[str]] = []
     for sent in sentences:
-        result.extend(sliding_windows(sent, window_size))
+        if len(sent) < 2:
+            continue
+        if len(sent) <= window_size:
+            # Frase mais curta que a janela: emite uma única janela com todos
+            # os termos, em vez de descartá-la (sliding_windows retornaria []).
+            result.append(sent)
+        else:
+            result.extend(sliding_windows(sent, window_size))
     return result

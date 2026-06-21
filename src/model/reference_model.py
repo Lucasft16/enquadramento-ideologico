@@ -118,8 +118,8 @@ def build_reference_model(
     # 7. Centralidade
     centrality = degree_centrality(filtered)
 
-    # 8. Mapa ideologia → termos
-    ideology_terms = build_ideology_term_map(communities, assignment, centrality)
+    # 8. Mapa ideologia → termos (com prioridade de semente)
+    ideology_terms = build_ideology_term_map(communities, assignment, centrality, seeds)
 
     return {
         "ideology_terms": ideology_terms,
