@@ -24,6 +24,7 @@ from src.parser.pipeline import process_document
 from src.model.reference_model import load
 from src.scoring.classifier import classify
 from src.viz.render import render_document_subgraph, render_score_bar
+from src.viz.render_interactive import render_doc_graph_html
 
 
 def load_trie(markers_path: Path) -> Trie:
@@ -132,6 +133,10 @@ def main() -> None:
     bars_path = out_dir / f"{stem}_bars.png"
     render_score_bar(scores, bars_path, title=f"Distribuição — {doc_path.name}")
     print(f"Gráfico de barras salvo em: {bars_path}")
+
+    html_path = out_dir / f"{stem}_grafo.html"
+    render_doc_graph_html(windows, model, html_path)
+    print(f"Grafo interativo salvo em: {html_path}")
 
 
 if __name__ == "__main__":
