@@ -54,8 +54,8 @@ def build_ideology_term_map(
     Prioridade de semente: se `seeds` for fornecido, todo termo declarado como
     semente de uma ideologia é atribuído a ELA, independentemente da comunidade
     em que caiu (e removido de qualquer outra). Sem isso, a detecção imperfeita
-    de comunidades espalha sementes — ex.: "desregulação" (semente neoliberal)
-    cair numa comunidade rotulada "social-democracia" faria um texto neoliberal
+    de comunidades espalha sementes — ex.: "desregulação" (semente libertária)
+    cair numa comunidade rotulada "social-democracia" faria um texto libertário
     pontuar para social-democracia.
 
     Args:

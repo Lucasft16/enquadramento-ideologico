@@ -1,6 +1,6 @@
 # Ideologia Grafos
 
-Sistema que lê um texto qualquer e estima, em porcentagem, qual é o seu enquadramento ideológico — **neoliberal**, **progressista**, **conservador** ou **ancap** — usando grafos de coocorrência de palavras.
+Sistema que lê um texto qualquer e estima, em porcentagem, qual é o seu enquadramento ideológico — **libertarianismo**, **conservadorismo**, **comunismo** ou **social-democracia** — usando grafos de coocorrência de palavras.
 
 Desenvolvido como trabalho da disciplina de **Estruturas de Dados 2**. Todos os algoritmos e estruturas foram implementados do zero: grafo com lista de adjacência, Union-Find, Trie, BFS/DFS, Kruskal, Brandes, Dijkstra e Girvan-Newman.
 
@@ -129,12 +129,12 @@ Saída esperada no terminal:
 ```
 DISTRIBUICAO IDEOLOGICA
 ==================================================
-  neoliberal           72.4%  ############################
-  conservador          14.1%  #####
-  progressista          8.3%  ###
-  ancap                 5.2%  ##
+  libertarianismo       56.5%  ######################
+  social-democracia     28.8%  ###########
+  conservadorismo       14.7%  #####
+  comunismo              0.0%
 
-Enquadramento dominante: neoliberal (72.4%)
+Enquadramento dominante: libertarianismo (56.5%)
 ```
 
 Também são geradas duas imagens em `outputs/figures/`:
@@ -181,10 +181,10 @@ Edite `data/lexicons/seeds.json`. Cada ideologia tem uma lista de palavras que r
 
 ```json
 {
-  "neoliberal": ["mercado", "privatização", "eficiência", ...],
-  "progressista": ["redistribuição", "direitos", "sindicato", ...],
-  "conservador": ["família", "tradição", "ordem", ...],
-  "ancap": ["liberdade", "propriedade", "voluntário", ...]
+  "libertarianismo": ["liberdade", "propriedade", "mercado", ...],
+  "conservadorismo": ["família", "tradição", "ordem", ...],
+  "comunismo": ["proletariado", "revolução", "classe", ...],
+  "social-democracia": ["redistribuição", "direitos", "sindicato", ...]
 }
 ```
 
@@ -238,8 +238,7 @@ Os testes cobrem as estruturas de dados e os algoritmos individualmente, mas fal
 
 Co-ocorrência de palavras é uma aproximação superficial da semântica. Os problemas mais sérios:
 
-- **Negação é invisível**: "não privatização" e "defesa da privatização" geram a mesma co-ocorrência após remover stopwords
-- **Ironia e contra-discurso**: um texto progressista que critica termos neoliberais pode pontuar para neoliberal
+- **Ironia e contra-discurso**: um texto comunista que critica termos libertários pode pontuar para libertarianismo
 - **Ordem das palavras não existe**: o modelo trata o texto como um saco de palavras dentro de janelas
 - O **Girvan-Newman** tem custo O(V · E²) e fica lento para grafos maiores; a alternativa `label_propagation` disponível no código é muito mais rápida
 - O número de comunidades (`max_communities`) é ajustado manualmente e afeta muito o resultado final
@@ -258,10 +257,10 @@ A melhoria mais impactante seria substituir o corpus sintético por textos reais
 
 ### 4. Quantidade de ideologias
 
-O sistema trabalha com apenas 4 ideologias fixas. O espectro político real é mais amplo:
+O sistema trabalha com 4 ideologias (libertarianismo, conservadorismo, comunismo, social-democracia). O espectro político real é mais amplo:
 
 - Ideologias não são categorias discretas; um texto pode ter elementos de várias ao mesmo tempo
-- Faltam categorias relevantes no contexto brasileiro: trabalhismo, social-democracia, populismo, etc.
+- Ainda faltam vertentes relevantes no contexto brasileiro: trabalhismo, populismo, ecologismo, etc.
 - Adicionar uma nova ideologia exige editar `seeds.json`, adicionar entradas em `generate_corpus.py` (TEMPLATES e LEXICONS) e reconstruir o modelo inteiro
 
 ### 5. Coloração e visualização do grafo
