@@ -84,8 +84,8 @@ A ordem de commits reflete a ordem de dependências do sistema, algoritmo por al
 
 ```bash
 git clone <url-do-repositório>
-cd ed2_grafos
-pip install -e .
+cd enquadramento-ideologico
+pip install -r requirements.txt
 ```
 
 ### Passo 2 — (Opcional) Instale o modelo de linguagem do spaCy
