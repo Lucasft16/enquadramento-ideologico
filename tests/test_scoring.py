@@ -10,15 +10,15 @@ def _make_model() -> dict:
     """Modelo mínimo controlado para testes."""
     return {
         "ideology_terms": {
-            "neoliberal": {
+            "libertarianismo": {
                 "mercado": 0.9, "privatização": 0.8, "eficiência": 0.7,
                 "capital": 0.6, "investimento": 0.5,
             },
-            "progressista": {
+            "social-democracia": {
                 "saúde": 0.9, "educação": 0.8, "trabalhador": 0.7,
                 "direitos": 0.6, "social": 0.5,
             },
-            "conservador": {
+            "conservadorismo": {
                 "família": 0.9, "tradição": 0.8, "ordem": 0.7,
                 "segurança": 0.6, "valores": 0.5,
             },
@@ -37,7 +37,7 @@ def _make_model() -> dict:
             ["saúde", "educação", "trabalhador", "direitos", "social"],
             ["família", "tradição", "ordem", "segurança", "valores"],
         ],
-        "assignment": {"0": "neoliberal", "1": "progressista", "2": "conservador"},
+        "assignment": {"0": "libertarianismo", "1": "social-democracia", "2": "conservadorismo"},
         "vocab_size": 15,
     }
 
@@ -82,26 +82,26 @@ class TestClassifyJaccard:
         scores = classify(windows, model, method="jaccard")
         assert sum(scores.values()) == pytest.approx(1.0, abs=1e-9)
 
-    def test_neoliberal_terms_dominant(self):
+    def test_libertarianismo_terms_dominant(self):
         model = _make_model()
         windows = [["mercado", "privatização", "eficiência", "capital", "investimento"]]
         scores = classify(windows, model, method="jaccard")
         dominant = max(scores, key=lambda k: scores[k])
-        assert dominant == "neoliberal"
+        assert dominant == "libertarianismo"
 
-    def test_progressista_terms_dominant(self):
+    def test_social_democracia_terms_dominant(self):
         model = _make_model()
         windows = [["saúde", "educação", "trabalhador", "direitos", "social"]]
         scores = classify(windows, model, method="jaccard")
         dominant = max(scores, key=lambda k: scores[k])
-        assert dominant == "progressista"
+        assert dominant == "social-democracia"
 
-    def test_conservador_terms_dominant(self):
+    def test_conservadorismo_terms_dominant(self):
         model = _make_model()
         windows = [["família", "tradição", "ordem", "segurança", "valores"]]
         scores = classify(windows, model, method="jaccard")
         dominant = max(scores, key=lambda k: scores[k])
-        assert dominant == "conservador"
+        assert dominant == "conservadorismo"
 
     def test_empty_windows_uniform(self):
         model = _make_model()
@@ -219,11 +219,11 @@ class TestScoreDocumentGraph:
         scores = score_document_graph(windows, model)
         assert sum(scores.values()) == pytest.approx(1.0, abs=1e-9)
 
-    def test_neoliberal_dominant(self):
+    def test_libertarianismo_dominant(self):
         model = _make_model()
         windows = [["mercado", "privatização", "eficiência", "capital", "investimento"]]
         scores = score_document_graph(windows, model)
-        assert max(scores, key=lambda k: scores[k]) == "neoliberal"
+        assert max(scores, key=lambda k: scores[k]) == "libertarianismo"
 
     def test_clustered_beats_scattered(self):
         """Termos ideológicos na mesma janela devem gerar score maior do que dispersos."""
@@ -232,7 +232,7 @@ class TestScoreDocumentGraph:
         scattered = [["mercado"], ["privatização"], ["capital"]]
         s_clustered = score_document_graph(clustered, model)
         s_scattered = score_document_graph(scattered, model)
-        assert s_clustered["neoliberal"] > s_scattered["neoliberal"]
+        assert s_clustered["libertarianismo"] > s_scattered["libertarianismo"]
 
     def test_empty_windows_uniform(self):
         model = _make_model()
@@ -251,4 +251,4 @@ class TestClassifyGraph:
         model = _make_model()
         windows = [["mercado", "privatização", "eficiência"]]
         scores = classify(windows, model, method="jaccard")
-        assert max(scores, key=lambda k: scores[k]) == "neoliberal"
+        assert max(scores, key=lambda k: scores[k]) == "libertarianismo"

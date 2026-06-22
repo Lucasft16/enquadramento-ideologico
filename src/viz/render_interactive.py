@@ -17,14 +17,6 @@ _IDEOLOGY_COLORS: dict[str, str] = {
     "unknown":           "#aaaaaa",  # cinza
 }
 
-_IDEOLOGY_BORDER: dict[str, str] = {
-    "libertarianismo":   "#1a5fa0",
-    "conservadorismo":   "#a01010",
-    "comunismo":         "#6b2e7a",
-    "social-democracia": "#2d7a2a",
-    "unknown":           "#888888",
-}
-
 _PHYSICS_OPTIONS = {
     "physics": {
         "enabled": True,
@@ -147,7 +139,7 @@ def _build_network(
 
     for term in doc_graph.vertices():
         ideology, centrality = term_ideology_map.get(term, ("unknown", 0.0))
-        size = node_sizes.get(term, 12)
+        size = node_sizes.get(term, 8)   # unknown fica menor (fallback 8 vs 12)
         shape = "ellipse" if ideology != "unknown" else "dot"
         tooltip = (
             f"<b>{term}</b><br>"
@@ -177,7 +169,10 @@ def _build_network(
         options: dict[str, Any] = {
             "value": w,
             "title": tooltip,
-            "label": str(int(w)),
+            # Só mostra o número sobre a aresta quando a co-ocorrência é repetida (w > 1).
+            # Para w=1 (par apareceu em apenas 1 janela) o label seria "1" em toda aresta,
+            # poluindo o grafo sem adicionar informação.
+            "label": str(int(w)) if w > 1 else "",
         }
         if is_bridge:
             options["color"] = {"color": "#999999", "opacity": 0.5}

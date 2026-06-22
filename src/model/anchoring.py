@@ -122,11 +122,12 @@ def anchor_communities_supervised(
         community_set = set(community)
 
         # --- Sinal 1: seeds ---
-        total_seeds = sum(len(terms) for terms in seeds.values()) or 1
+        # Cada ideologia normaliza pelo seu próprio número de seeds, evitando
+        # penalizar ideologias com vocabulários de seeds maiores.
         seed_scores: dict[str, float] = {}
         for ideology, seed_terms in seeds.items():
             hits = sum(1 for s in seed_terms if s in community_set)
-            seed_scores[ideology] = hits / total_seeds
+            seed_scores[ideology] = hits / (len(seed_terms) or 1)
 
         # Normaliza seed_scores para soma 1 (se houver algum hit).
         seed_total = sum(seed_scores.values())
@@ -185,6 +186,12 @@ def build_ideology_term_map(
         Dicionário aninhado {ideologia: {termo: pontuação}}.
     """
     ideology_map: dict[str, dict[str, float]] = {}
+
+    # Garante que toda ideologia declarada nas seeds aparece no mapa,
+    # mesmo que nenhum de seus termos tenha ocorrido no corpus.
+    if seeds:
+        for ideology in seeds:
+            ideology_map.setdefault(ideology, {})
 
     for idx, community in enumerate(communities):
         ideology = assignment.get(idx, "unknown")

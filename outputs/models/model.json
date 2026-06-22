@@ -1,0 +1,1846 @@
+{
+  "ideology_terms": {
+    "libertarianismo": {
+      "abolida": 0.003875968992248062,
+      "individual": 0.023255813953488372,
+      "competitividade": 0.011627906976744186,
+      "toda": 0.003875968992248062,
+      "violação": 0.003875968992248062,
+      "voluntário": 0.007751937984496124,
+      "nao_capital": 0.011627906976744186,
+      "setor_privado": 0.015503875968992248,
+      "privada": 0.007751937984496124,
+      "controles": 0.046511627906976744,
+      "empreendedorismo": 0.007751937984496124,
+      "florescem": 0.003875968992248062,
+      "livre_comércio": 0.003875968992248062,
+      "menos": 0.003875968992248062,
+      "inviolável": 0.003875968992248062,
+      "desnecessários": 0.003875968992248062,
+      "nao_anarquia": 0.011627906976744186,
+      "nao_economia_de_mercado": 0.011627906976744186,
+      "nao_eficiência": 0.003875968992248062,
+      "nao_estado_mínimo": 0.007751937984496124,
+      "nao_estatismo": 0.011627906976744186,
+      "nao_individualismo": 0.007751937984496124,
+      "nao_liberdade": 0.011627906976744186,
+      "nao_lucro": 0.011627906976744186,
+      "nao_voluntário": 0.007751937984496124,
+      "prospera": 0.003875968992248062,
+      "resolvem": 0.01937984496124031,
+      "espontâneo": 0.007751937984496124,
+      "estado_mínimo": 0.003875968992248062,
+      "liberdade": 0.003875968992248062,
+      "livre_mercado": 0.003875968992248062,
+      "anarquia": 0.003875968992248062,
+      "capital": 0.007751937984496124,
+      "concorrência": 0.003875968992248062,
+      "estatismo": 0.003875968992248062,
+      "eficiência": 0.003875968992248062,
+      "propriedade": 0.007751937984496124,
+      "autônomo": 0.003875968992248062,
+      "contrato": 0.003875968992248062,
+      "individualismo": 0.003875968992248062,
+      "desregulação": 0.003875968992248062,
+      "estatal": 0.007751937984496124,
+      "mercados": 0.003875968992248062,
+      "nao_necessidade": 0.003875968992248062,
+      "direito": 0.015503875968992248,
+      "trabalho": 0.011627906976744186,
+      "estatais": 0.011627906976744186,
+      "impede": 0.015503875968992248,
+      "cada": 0.007751937984496124,
+      "escolhas": 0.003875968992248062,
+      "indivíduo": 0.003875968992248062,
+      "garante": 0.003875968992248062,
+      "aumenta": 0.003875968992248062,
+      "empresas": 0.003875968992248062,
+      "contratos": 0.003875968992248062,
+      "destrói": 0.003875968992248062,
+      "livre_iniciativa": 0.007751937984496124,
+      "cidadão": 0.011627906976744186,
+      "agressão": 0.011627906976744186,
+      "comprometido": 0.003875968992248062,
+      "constitui": 0.003875968992248062,
+      "qualquer": 0.003875968992248062,
+      "camaradas": 0.003875968992248062,
+      "organizam": 0.007751937984496124,
+      "contra": 0.01937984496124031,
+      "defendemos": 0.007751937984496124,
+      "propriedade_privada": 0.003875968992248062,
+      "via": 0.023255813953488372,
+      "nao_internacionalismo": 0.007751937984496124,
+      "cidadania": 0.003875968992248062,
+      "negociação": 0.003875968992248062,
+      "reformista": 0.003875968992248062,
+      "concilia": 0.01937984496124031,
+      "forma": 0.007751937984496124,
+      "gradual": 0.003875968992248062,
+      "regulada": 0.003875968992248062,
+      "eficiente": 0.007751937984496124,
+      "distribui": 0.015503875968992248,
+      "economia_de_mercado": 0.003875968992248062,
+      "livre": 0.003875968992248062,
+      "promove": 0.007751937984496124,
+      "nao_abolir": 0.015503875968992248,
+      "estado": 0.003875968992248062,
+      "mercado": 0.007751937984496124,
+      "proteção": 0.003875968992248062,
+      "nao_espontâneo": 0.007751937984496124,
+      "coercitiva": 0.031007751937984496,
+      "indivíduos": 0.011627906976744186,
+      "nao_competitividade": 0.003875968992248062,
+      "nao_concorrência": 0.007751937984496124,
+      "nao_desregulação": 0.003875968992248062,
+      "nao_empreendedorismo": 0.007751937984496124,
+      "nao_livre_comércio": 0.003875968992248062,
+      "nao_propriedade_privada": 0.003875968992248062,
+      "estabeleceriam": 0.003875968992248062,
+      "voluntariamente": 0.003875968992248062,
+      "lucro": 0.003875968992248062,
+      "privatização": 0.003875968992248062
+    },
+    "conservadorismo": {
+      "autoridade": 0.003875968992248062,
+      "nao_estabilidade": 0.007751937984496124,
+      "caos": 0.031007751937984496,
+      "dissolve": 0.003875968992248062,
+      "nao_cultura": 0.003875968992248062,
+      "nao_herança": 0.011627906976744186,
+      "nao_identidade": 0.007751937984496124,
+      "nao_pátria": 0.011627906976744186,
+      "nao_religião": 0.007751937984496124,
+      "relativismo": 0.003875968992248062,
+      "civilização": 0.003875968992248062,
+      "religião": 0.003875968992248062,
+      "hierarquia": 0.011627906976744186,
+      "família": 0.007751937984496124,
+      "identidade": 0.011627906976744186,
+      "disciplina": 0.003875968992248062,
+      "nao_civilização": 0.007751937984496124,
+      "nação": 0.003875968992248062,
+      "nao_segurança": 0.007751937984496124,
+      "nao_família": 0.003875968992248062,
+      "respeito": 0.011627906976744186,
+      "fragmenta": 0.03875968992248062,
+      "soberania": 0.003875968992248062,
+      "exige": 0.011627906976744186,
+      "pública": 0.007751937984496124,
+      "nao_costumes": 0.003875968992248062,
+      "nao_disciplina": 0.011627906976744186,
+      "nao_hierarquia": 0.007751937984496124,
+      "nao_nação": 0.007751937984496124,
+      "nao_responsabilidade": 0.011627906976744186,
+      "nao_soberania": 0.011627906976744186,
+      "nao_valores": 0.007751937984496124,
+      "perigosamente": 0.003875968992248062,
+      "cultural": 0.003875968992248062,
+      "nacional": 0.003875968992248062,
+      "depende": 0.003875968992248062,
+      "costumes": 0.003875968992248062,
+      "tradição": 0.003875968992248062,
+      "cultura": 0.003875968992248062,
+      "herança": 0.007751937984496124,
+      "moral": 0.007751937984496124,
+      "segurança_pública": 0.003875968992248062,
+      "estabilidade": 0.007751937984496124,
+      "valores": 0.007751937984496124,
+      "ordem": 0.003875968992248062,
+      "imperativo": 0.007751937984496124,
+      "orienta": 0.011627906976744186,
+      "garantem": 0.01937984496124031,
+      "manter": 0.007751937984496124,
+      "fortalecimento": 0.003875968992248062,
+      "civilizatória": 0.003875968992248062,
+      "sustenta": 0.003875968992248062,
+      "gerações": 0.007751937984496124,
+      "pátria": 0.003875968992248062,
+      "segurança": 0.003875968992248062,
+      "tradicionais": 0.003875968992248062,
+      "essenciais": 0.003875968992248062,
+      "futuras": 0.003875968992248062,
+      "responsabilidade": 0.003875968992248062
+    },
+    "comunismo": {
+      "alicerce": 0.003875968992248062,
+      "preservada": 0.011627906976744186,
+      "deve": 0.007751937984496124,
+      "sociedade": 0.007751937984496124,
+      "condição": 0.050387596899224806,
+      "nao_alienação": 0.011627906976744186,
+      "nao_burguesia": 0.003875968992248062,
+      "nao_coletivização": 0.007751937984496124,
+      "nao_economia_planificada": 0.003875968992248062,
+      "nao_estatização": 0.003875968992248062,
+      "nao_exploração": 0.007751937984496124,
+      "nao_expropriação": 0.007751937984496124,
+      "nao_opressão": 0.003875968992248062,
+      "nao_propriedade_coletiva": 0.003875968992248062,
+      "nao_socialismo": 0.011627906976744186,
+      "nao_vanguarda": 0.003875968992248062,
+      "burguesia": 0.007751937984496124,
+      "exploração": 0.003875968992248062,
+      "comunismo": 0.003875968992248062,
+      "expropriação": 0.011627906976744186,
+      "vanguarda": 0.003875968992248062,
+      "camarada": 0.007751937984496124,
+      "revolucionário": 0.003875968992248062,
+      "só": 0.011627906976744186,
+      "coletiva": 0.01937984496124031,
+      "proletariado": 0.003875968992248062,
+      "estatização": 0.007751937984496124,
+      "promovida": 0.003875968992248062,
+      "superada": 0.003875968992248062,
+      "apenas": 0.003875968992248062,
+      "elimina": 0.003875968992248062,
+      "opressão": 0.003875968992248062,
+      "trabalhador": 0.003875968992248062,
+      "concentra": 0.015503875968992248,
+      "explora": 0.003875968992248062,
+      "marxismo": 0.007751937984496124,
+      "poder": 0.003875968992248062,
+      "perpetua": 0.011627906976744186,
+      "burguesa": 0.003875968992248062,
+      "mascara": 0.003875968992248062,
+      "alienação": 0.003875968992248062,
+      "nao_ditadura": 0.011627906976744186,
+      "dominante": 0.031007751937984496,
+      "planificação": 0.003875968992248062,
+      "intacta": 0.003875968992248062,
+      "nao_camarada": 0.011627906976744186,
+      "nao_classe": 0.011627906976744186,
+      "nao_planificação": 0.007751937984496124,
+      "nao_revolucionário": 0.011627906976744186,
+      "permanecerá": 0.003875968992248062,
+      "ditadura": 0.003875968992248062,
+      "economia_planificada": 0.003875968992248062,
+      "dialética": 0.003875968992248062,
+      "socialismo": 0.011627906976744186,
+      "revolução": 0.003875968992248062,
+      "coletivização": 0.003875968992248062,
+      "internacionalismo": 0.003875968992248062,
+      "nao_comunismo": 0.007751937984496124,
+      "rumo": 0.015503875968992248,
+      "fim": 0.007751937984496124,
+      "história": 0.003875968992248062,
+      "motor": 0.003875968992248062,
+      "produção": 0.011627906976744186,
+      "meios": 0.003875968992248062,
+      "porá": 0.003875968992248062,
+      "classe": 0.003875968992248062,
+      "propriedade_coletiva": 0.007751937984496124
+    },
+    "social-democracia": {
+      "alcança": 0.01937984496124031,
+      "direitos_humanos": 0.007751937984496124,
+      "gradualismo": 0.003875968992248062,
+      "meio": 0.007751937984496124,
+      "saúde": 0.003875968992248062,
+      "social": 0.011627906976744186,
+      "sustentável": 0.011627906976744186,
+      "democrática": 0.015503875968992248,
+      "resulta": 0.015503875968992248,
+      "previdência_social": 0.007751937984496124,
+      "progresso": 0.003875968992248062,
+      "constrói": 0.003875968992248062,
+      "inclusão": 0.003875968992248062,
+      "redistribuição": 0.011627906976744186,
+      "justiça": 0.007751937984496124,
+      "partes": 0.003875968992248062,
+      "reformismo": 0.011627906976744186,
+      "educação": 0.003875968992248062,
+      "reduz": 0.015503875968992248,
+      "seguridade": 0.003875968992248062,
+      "bem_estar_social": 0.003875968992248062,
+      "conciliação": 0.003875968992248062,
+      "respeitando": 0.027131782945736434,
+      "assegura": 0.003875968992248062,
+      "conflitos": 0.003875968992248062,
+      "setores": 0.003875968992248062,
+      "buscamos": 0.003875968992248062,
+      "institucional": 0.003875968992248062,
+      "salário_mínimo": 0.007751937984496124,
+      "sistema_único_de_saúde": 0.003875968992248062,
+      "solidariedade": 0.003875968992248062,
+      "welfare": 0.003875968992248062,
+      "desigualdade": 0.003875968992248062,
+      "direitos": 0.003875968992248062,
+      "sindicato": 0.007751937984496124
+    }
+  },
+  "graph_edges": [
+    [
+      "concilia",
+      "desigualdade",
+      0.5093441106754625
+    ],
+    [
+      "redistribuição",
+      "seguridade",
+      0.4456982651804135
+    ],
+    [
+      "concilia",
+      "regulada",
+      0.8899467689652302
+    ],
+    [
+      "concilia",
+      "sindicato",
+      0.5085919568493752
+    ],
+    [
+      "sindicato",
+      "via",
+      0.45888121548738536
+    ],
+    [
+      "concilia",
+      "gradual",
+      0.7490269121928769
+    ],
+    [
+      "concilia",
+      "forma",
+      0.7090479478852403
+    ],
+    [
+      "eficiente",
+      "forma",
+      0.6809882956930143
+    ],
+    [
+      "respeitando",
+      "solidariedade",
+      0.4025563485713902
+    ],
+    [
+      "cidadania",
+      "via",
+      0.3974412056922683
+    ],
+    [
+      "alcança",
+      "meio",
+      0.5588535433878751
+    ],
+    [
+      "alcança",
+      "direitos_humanos",
+      0.48303694059442004
+    ],
+    [
+      "alcança",
+      "saúde",
+      0.4628632926033054
+    ],
+    [
+      "alcança",
+      "gradualismo",
+      0.4588587954599935
+    ],
+    [
+      "alcança",
+      "social",
+      0.45466464558107594
+    ],
+    [
+      "democrática",
+      "meio",
+      0.9225392889774426
+    ],
+    [
+      "fragmenta",
+      "social",
+      0.8072967811081059
+    ],
+    [
+      "resulta",
+      "social",
+      0.7284353095355875
+    ],
+    [
+      "conciliação",
+      "reformismo",
+      0.43241509917153936
+    ],
+    [
+      "reformismo",
+      "respeitando",
+      0.43186504062258285
+    ],
+    [
+      "reformismo",
+      "resulta",
+      0.4195814594595987
+    ],
+    [
+      "estado",
+      "nao_abolir",
+      0.8361666845372933
+    ],
+    [
+      "nao_abolir",
+      "promove",
+      0.7736419478771075
+    ],
+    [
+      "distribui",
+      "promove",
+      0.7348631499768556
+    ],
+    [
+      "mercado",
+      "nao_abolir",
+      0.6618266832733722
+    ],
+    [
+      "nao_abolir",
+      "proteção",
+      0.3988131080783174
+    ],
+    [
+      "mercado",
+      "nao_espontâneo",
+      0.47709369269365404
+    ],
+    [
+      "defendemos",
+      "via",
+      0.6809882956930143
+    ],
+    [
+      "contra",
+      "defendemos",
+      0.5028140189470182
+    ],
+    [
+      "negociação",
+      "via",
+      0.8435855514889065
+    ],
+    [
+      "reformista",
+      "via",
+      0.4253160997735881
+    ],
+    [
+      "salário_mínimo",
+      "via",
+      0.4209619571610447
+    ],
+    [
+      "redistribuição",
+      "reduz",
+      0.46192907682535334
+    ],
+    [
+      "democrática",
+      "redistribuição",
+      0.43169828134470406
+    ],
+    [
+      "apenas",
+      "coletiva",
+      0.769048706852368
+    ],
+    [
+      "coletiva",
+      "elimina",
+      1.0
+    ],
+    [
+      "coletiva",
+      "trabalhador",
+      0.769048706852368
+    ],
+    [
+      "coletiva",
+      "expropriação",
+      0.5328258575960199
+    ],
+    [
+      "coletiva",
+      "opressão",
+      0.5127388863544259
+    ],
+    [
+      "classe",
+      "contra",
+      0.5551520637532232
+    ],
+    [
+      "internacionalismo",
+      "nao_revolucionário",
+      0.5105719075730685
+    ],
+    [
+      "dominante",
+      "permanecerá",
+      1.0
+    ],
+    [
+      "dominante",
+      "intacta",
+      0.8566972628396656
+    ],
+    [
+      "dominante",
+      "nao_ditadura",
+      0.5659493222917291
+    ],
+    [
+      "dominante",
+      "nao_camarada",
+      0.5659493222917291
+    ],
+    [
+      "dominante",
+      "nao_planificação",
+      0.5659493222917291
+    ],
+    [
+      "dominante",
+      "nao_internacionalismo",
+      0.5659493222917291
+    ],
+    [
+      "dominante",
+      "nao_classe",
+      0.5659493222917291
+    ],
+    [
+      "dominante",
+      "nao_revolucionário",
+      0.5659493222917291
+    ],
+    [
+      "nao_ditadura",
+      "planificação",
+      0.5266584212629871
+    ],
+    [
+      "alienação",
+      "nao_ditadura",
+      0.49618203072823047
+    ],
+    [
+      "superada",
+      "só",
+      1.0
+    ],
+    [
+      "promovida",
+      "só",
+      1.0
+    ],
+    [
+      "burguesia",
+      "só",
+      0.4321406408414252
+    ],
+    [
+      "coletivização",
+      "nao_revolucionário",
+      0.4895183916101602
+    ],
+    [
+      "burguesia",
+      "nao_alienação",
+      0.5266584212629871
+    ],
+    [
+      "condição",
+      "nao_socialismo",
+      0.5031875411378414
+    ],
+    [
+      "camarada",
+      "nao_socialismo",
+      0.4895183916101602
+    ],
+    [
+      "nao_socialismo",
+      "revolucionário",
+      0.43199010551558453
+    ],
+    [
+      "dialética",
+      "nao_classe",
+      0.5105719075730685
+    ],
+    [
+      "nao_expropriação",
+      "vanguarda",
+      0.4895183916101602
+    ],
+    [
+      "ditadura",
+      "nao_camarada",
+      0.5105719075730685
+    ],
+    [
+      "burguesa",
+      "perpetua",
+      1.0
+    ],
+    [
+      "mascara",
+      "perpetua",
+      1.0
+    ],
+    [
+      "marxismo",
+      "perpetua",
+      0.3706491710700333
+    ],
+    [
+      "expropriação",
+      "proletariado",
+      0.5739779553666795
+    ],
+    [
+      "expropriação",
+      "nao_exploração",
+      0.5031875411378414
+    ],
+    [
+      "democrática",
+      "inclusão",
+      0.3812827366790109
+    ],
+    [
+      "partes",
+      "resulta",
+      0.8497665148530921
+    ],
+    [
+      "justiça",
+      "resulta",
+      0.5056987225099568
+    ],
+    [
+      "respeitando",
+      "salário_mínimo",
+      0.4955220649690348
+    ],
+    [
+      "depende",
+      "pública",
+      1.0000000000000002
+    ],
+    [
+      "pública",
+      "respeito",
+      0.6615896766461424
+    ],
+    [
+      "estabilidade",
+      "nao_soberania",
+      0.5498628086018104
+    ],
+    [
+      "estabilidade",
+      "garantem",
+      0.4537518381479509
+    ],
+    [
+      "exige",
+      "respeito",
+      0.7654569202747188
+    ],
+    [
+      "identidade",
+      "respeito",
+      0.4288863799639499
+    ],
+    [
+      "nao_segurança",
+      "soberania",
+      0.4526884131907346
+    ],
+    [
+      "família",
+      "nao_segurança",
+      0.5603739559408765
+    ],
+    [
+      "família",
+      "nao_pátria",
+      0.5603739559408765
+    ],
+    [
+      "exige",
+      "nacional",
+      0.8915384612876776
+    ],
+    [
+      "cultural",
+      "exige",
+      0.7520889645389366
+    ],
+    [
+      "hierarquia",
+      "nação",
+      0.38552750039478545
+    ],
+    [
+      "garantem",
+      "segurança",
+      0.4329622264964637
+    ],
+    [
+      "nao_herança",
+      "religião",
+      0.4895183916101602
+    ],
+    [
+      "caos",
+      "nao_herança",
+      0.5266584212629871
+    ],
+    [
+      "civilização",
+      "nao_herança",
+      0.4408046160095699
+    ],
+    [
+      "fragmenta",
+      "perigosamente",
+      0.8361666845372933
+    ],
+    [
+      "fragmenta",
+      "nao_hierarquia",
+      0.6192936018778291
+    ],
+    [
+      "fragmenta",
+      "nao_disciplina",
+      0.5684597643005305
+    ],
+    [
+      "fragmenta",
+      "nao_nação",
+      0.5336881632772756
+    ],
+    [
+      "fragmenta",
+      "nao_costumes",
+      0.5336881632772756
+    ],
+    [
+      "fragmenta",
+      "nao_civilização",
+      0.5336881632772756
+    ],
+    [
+      "fragmenta",
+      "nao_soberania",
+      0.4831648037254912
+    ],
+    [
+      "fragmenta",
+      "nao_responsabilidade",
+      0.4831648037254912
+    ],
+    [
+      "fragmenta",
+      "nao_valores",
+      0.4831648037254912
+    ],
+    [
+      "educação",
+      "previdência_social",
+      0.4277290417349056
+    ],
+    [
+      "respeitando",
+      "welfare",
+      0.45652340840983585
+    ],
+    [
+      "direitos",
+      "trabalho",
+      0.38495085558379954
+    ],
+    [
+      "previdência_social",
+      "sustentável",
+      0.4367922594903786
+    ],
+    [
+      "bem_estar_social",
+      "justiça",
+      0.43096306047453664
+    ],
+    [
+      "cultura",
+      "nao_hierarquia",
+      0.4636434439972019
+    ],
+    [
+      "herança",
+      "nao_nação",
+      0.42371014564393245
+    ],
+    [
+      "herança",
+      "imperativo",
+      0.3871288629174795
+    ],
+    [
+      "nao_responsabilidade",
+      "segurança_pública",
+      0.5224557047542331
+    ],
+    [
+      "cidadão",
+      "responsabilidade",
+      0.8237314483789522
+    ],
+    [
+      "nao_disciplina",
+      "tradição",
+      0.43414097689149955
+    ],
+    [
+      "costumes",
+      "nao_disciplina",
+      0.5070428982659198
+    ],
+    [
+      "orienta",
+      "sustenta",
+      1.0
+    ],
+    [
+      "moral",
+      "orienta",
+      0.7714594725595558
+    ],
+    [
+      "civilizatória",
+      "orienta",
+      0.7403303386227902
+    ],
+    [
+      "manter",
+      "valores",
+      0.6104681835343951
+    ],
+    [
+      "nao_soberania",
+      "valores",
+      0.4684648756472519
+    ],
+    [
+      "moral",
+      "nao_responsabilidade",
+      0.41216150816386693
+    ],
+    [
+      "cada",
+      "cidadão",
+      0.9147973479529758
+    ],
+    [
+      "cada",
+      "direito",
+      0.5604169098124723
+    ],
+    [
+      "cidadão",
+      "comprometido",
+      0.8983706351279152
+    ],
+    [
+      "disciplina",
+      "nao_religião",
+      0.5908503464756331
+    ],
+    [
+      "inviolável",
+      "privada",
+      0.9882822751856799
+    ],
+    [
+      "privada",
+      "voluntário",
+      0.36269347267223223
+    ],
+    [
+      "estatismo",
+      "nao_individualismo",
+      0.46034897286398446
+    ],
+    [
+      "desregulação",
+      "resolvem",
+      0.3939987066971594
+    ],
+    [
+      "agressão",
+      "qualquer",
+      1.0
+    ],
+    [
+      "agressão",
+      "constitui",
+      1.0
+    ],
+    [
+      "agressão",
+      "livre_iniciativa",
+      0.28717264778654294
+    ],
+    [
+      "concorrência",
+      "nao_estatismo",
+      0.47709369269365404
+    ],
+    [
+      "liberdade",
+      "nao_economia_de_mercado",
+      0.4657056401934739
+    ],
+    [
+      "distribui",
+      "livre",
+      0.6871711029778128
+    ],
+    [
+      "distribui",
+      "eficiente",
+      0.6871711029778128
+    ],
+    [
+      "distribui",
+      "economia_de_mercado",
+      0.4057517683019841
+    ],
+    [
+      "lucro",
+      "nao_concorrência",
+      0.5717620084410566
+    ],
+    [
+      "estatal",
+      "impede",
+      0.7689453767285365
+    ],
+    [
+      "estatal",
+      "resolvem",
+      0.5251807741991709
+    ],
+    [
+      "impede",
+      "livre_iniciativa",
+      0.39227983841995784
+    ],
+    [
+      "destrói",
+      "impede",
+      1.0
+    ],
+    [
+      "contratos",
+      "impede",
+      0.8948513638387112
+    ],
+    [
+      "competitividade",
+      "individual",
+      0.5396866433325156
+    ],
+    [
+      "competitividade",
+      "nao_capital",
+      0.4741564287423791
+    ],
+    [
+      "competitividade",
+      "setor_privado",
+      0.41548073443244493
+    ],
+    [
+      "empreendedorismo",
+      "nao_capital",
+      0.4831648037254912
+    ],
+    [
+      "empreendedorismo",
+      "resolvem",
+      0.4446861352002829
+    ],
+    [
+      "menos",
+      "setor_privado",
+      0.8397761526043097
+    ],
+    [
+      "florescem",
+      "setor_privado",
+      0.8397761526043097
+    ],
+    [
+      "livre_comércio",
+      "setor_privado",
+      0.3878200200961195
+    ],
+    [
+      "capital",
+      "trabalho",
+      0.7708710188112969
+    ],
+    [
+      "capital",
+      "nao_estatismo",
+      0.4454348055109794
+    ],
+    [
+      "garantem",
+      "pátria",
+      0.461334650674342
+    ],
+    [
+      "identidade",
+      "nao_pátria",
+      0.4863046548728598
+    ],
+    [
+      "identidade",
+      "nao_família",
+      0.4863046548728598
+    ],
+    [
+      "direito",
+      "indivíduo",
+      1.0
+    ],
+    [
+      "direito",
+      "escolhas",
+      0.8497665148530921
+    ],
+    [
+      "direito",
+      "espontâneo",
+      0.45574016420031543
+    ],
+    [
+      "espontâneo",
+      "nao_anarquia",
+      0.5068298239112695
+    ],
+    [
+      "individualismo",
+      "nao_voluntário",
+      0.39005739079231877
+    ],
+    [
+      "controles",
+      "nao_estatismo",
+      0.5659493222917291
+    ],
+    [
+      "controles",
+      "prospera",
+      1.0
+    ],
+    [
+      "controles",
+      "desnecessários",
+      0.8566972628396656
+    ],
+    [
+      "controles",
+      "nao_economia_de_mercado",
+      0.5659493222917291
+    ],
+    [
+      "controles",
+      "nao_anarquia",
+      0.5659493222917291
+    ],
+    [
+      "controles",
+      "nao_capital",
+      0.5659493222917291
+    ],
+    [
+      "controles",
+      "nao_voluntário",
+      0.5639611608143091
+    ],
+    [
+      "controles",
+      "nao_lucro",
+      0.5639611608143091
+    ],
+    [
+      "controles",
+      "nao_estado_mínimo",
+      0.4712810065443265
+    ],
+    [
+      "controles",
+      "nao_individualismo",
+      0.4712810065443265
+    ],
+    [
+      "controles",
+      "nao_liberdade",
+      0.4712810065443265
+    ],
+    [
+      "controles",
+      "nao_eficiência",
+      0.4712810065443265
+    ],
+    [
+      "mercados",
+      "resolvem",
+      0.7460512101565618
+    ],
+    [
+      "nao_necessidade",
+      "resolvem",
+      1.0
+    ],
+    [
+      "progresso",
+      "sustentável",
+      1.0
+    ],
+    [
+      "direitos_humanos",
+      "sustentável",
+      0.44600793499068847
+    ],
+    [
+      "contrato",
+      "nao_lucro",
+      0.3998170781357472
+    ],
+    [
+      "individual",
+      "voluntário",
+      0.4841342585554922
+    ],
+    [
+      "anarquia",
+      "nao_estado_mínimo",
+      0.4363262636662758
+    ],
+    [
+      "livre_mercado",
+      "nao_economia_de_mercado",
+      0.5105719075730685
+    ],
+    [
+      "individual",
+      "toda",
+      0.7728705353501698
+    ],
+    [
+      "individual",
+      "violação",
+      1.0
+    ],
+    [
+      "deve",
+      "individual",
+      0.7729175444608846
+    ],
+    [
+      "abolida",
+      "individual",
+      0.7728705353501698
+    ],
+    [
+      "deve",
+      "preservada",
+      0.8038694493979187
+    ],
+    [
+      "assegura",
+      "reduz",
+      1.0
+    ],
+    [
+      "reduz",
+      "setores",
+      1.0
+    ],
+    [
+      "conflitos",
+      "reduz",
+      0.84557733719889
+    ],
+    [
+      "estado_mínimo",
+      "nao_anarquia",
+      0.4657056401934739
+    ],
+    [
+      "contra",
+      "propriedade_privada",
+      0.4530760580737449
+    ],
+    [
+      "autônomo",
+      "nao_lucro",
+      0.41032822547481324
+    ],
+    [
+      "estabeleceriam",
+      "indivíduos",
+      1.0000000000000002
+    ],
+    [
+      "coercitiva",
+      "indivíduos",
+      0.8899467689652302
+    ],
+    [
+      "indivíduos",
+      "voluntariamente",
+      0.7490269121928769
+    ],
+    [
+      "coercitiva",
+      "nao_propriedade_privada",
+      0.5920171933647193
+    ],
+    [
+      "coercitiva",
+      "nao_desregulação",
+      0.5920171933647193
+    ],
+    [
+      "coercitiva",
+      "nao_competitividade",
+      0.5920171933647193
+    ],
+    [
+      "coercitiva",
+      "nao_concorrência",
+      0.5031875411378414
+    ],
+    [
+      "coercitiva",
+      "nao_espontâneo",
+      0.5031875411378414
+    ],
+    [
+      "coercitiva",
+      "nao_livre_comércio",
+      0.5031875411378414
+    ],
+    [
+      "coercitiva",
+      "nao_empreendedorismo",
+      0.5031875411378414
+    ],
+    [
+      "nao_liberdade",
+      "propriedade",
+      0.4657056401934739
+    ],
+    [
+      "estatais",
+      "propriedade",
+      0.40459520427854573
+    ],
+    [
+      "eficiência",
+      "nao_liberdade",
+      0.4197511000466616
+    ],
+    [
+      "concentra",
+      "marxismo",
+      0.40965005649782466
+    ],
+    [
+      "nao_planificação",
+      "revolução",
+      0.4863046548728598
+    ],
+    [
+      "meios",
+      "produção",
+      0.8931718448138704
+    ],
+    [
+      "porá",
+      "produção",
+      1.0000000000000002
+    ],
+    [
+      "fim",
+      "produção",
+      0.8103596522012687
+    ],
+    [
+      "fim",
+      "rumo",
+      0.6703504098453683
+    ],
+    [
+      "história",
+      "rumo",
+      1.0
+    ],
+    [
+      "motor",
+      "rumo",
+      0.883927589975039
+    ],
+    [
+      "rumo",
+      "socialismo",
+      0.544279246091
+    ],
+    [
+      "comunismo",
+      "nao_coletivização",
+      0.5770876175459936
+    ],
+    [
+      "exploração",
+      "nao_alienação",
+      0.5068298239112695
+    ],
+    [
+      "condição",
+      "nao_opressão",
+      0.5031875411378414
+    ],
+    [
+      "contra",
+      "propriedade_coletiva",
+      0.5269657572008093
+    ],
+    [
+      "nao_internacionalismo",
+      "propriedade_coletiva",
+      0.5105719075730685
+    ],
+    [
+      "contra",
+      "organizam",
+      0.7436249442024842
+    ],
+    [
+      "caos",
+      "nao_estabilidade",
+      0.686297351366124
+    ],
+    [
+      "autoridade",
+      "nao_estabilidade",
+      0.4712810065443265
+    ],
+    [
+      "caos",
+      "dissolve",
+      1.0
+    ],
+    [
+      "caos",
+      "relativismo",
+      0.8677807683408296
+    ],
+    [
+      "caos",
+      "nao_identidade",
+      0.6251292560902166
+    ],
+    [
+      "caos",
+      "nao_religião",
+      0.6213267370103898
+    ],
+    [
+      "caos",
+      "nao_pátria",
+      0.6213267370103898
+    ],
+    [
+      "caos",
+      "nao_cultura",
+      0.5266584212629871
+    ],
+    [
+      "alicerce",
+      "preservada",
+      1.0
+    ],
+    [
+      "preservada",
+      "sociedade",
+      0.8328433108417137
+    ],
+    [
+      "condição",
+      "sociedade",
+      0.8540050276216842
+    ],
+    [
+      "garantem",
+      "tradicionais",
+      0.8853860747064616
+    ],
+    [
+      "garantem",
+      "gerações",
+      0.8853860747064616
+    ],
+    [
+      "futuras",
+      "gerações",
+      0.8361666845372933
+    ],
+    [
+      "nao_empreendedorismo",
+      "privatização",
+      0.540103121258382
+    ],
+    [
+      "garante",
+      "trabalho",
+      1.0
+    ],
+    [
+      "constrói",
+      "democrática",
+      1.0
+    ],
+    [
+      "buscamos",
+      "respeitando",
+      0.84557733719889
+    ],
+    [
+      "institucional",
+      "respeitando",
+      0.84557733719889
+    ],
+    [
+      "respeitando",
+      "sistema_único_de_saúde",
+      0.4597983230342382
+    ],
+    [
+      "nao_valores",
+      "ordem",
+      0.5031875411378414
+    ],
+    [
+      "hierarquia",
+      "nao_identidade",
+      0.5721539055736724
+    ],
+    [
+      "hierarquia",
+      "nao_civilização",
+      0.5371563409650595
+    ],
+    [
+      "economia_planificada",
+      "nao_camarada",
+      0.4831648037254912
+    ],
+    [
+      "concentra",
+      "poder",
+      1.0
+    ],
+    [
+      "concentra",
+      "explora",
+      1.0
+    ],
+    [
+      "concentra",
+      "estatização",
+      0.48019279596868886
+    ],
+    [
+      "condição",
+      "nao_burguesia",
+      0.5031875411378414
+    ],
+    [
+      "camarada",
+      "estatização",
+      0.4670337952523572
+    ],
+    [
+      "condição",
+      "nao_economia_planificada",
+      0.7374896660097611
+    ],
+    [
+      "condição",
+      "nao_exploração",
+      0.6603721788206361
+    ],
+    [
+      "condição",
+      "nao_propriedade_coletiva",
+      0.6603721788206361
+    ],
+    [
+      "condição",
+      "nao_estatização",
+      0.5992040835447286
+    ],
+    [
+      "condição",
+      "nao_vanguarda",
+      0.5992040835447286
+    ],
+    [
+      "condição",
+      "nao_comunismo",
+      0.5978558568852439
+    ],
+    [
+      "condição",
+      "nao_alienação",
+      0.5978558568852439
+    ],
+    [
+      "condição",
+      "nao_expropriação",
+      0.5978558568852439
+    ],
+    [
+      "condição",
+      "nao_coletivização",
+      0.5031875411378414
+    ],
+    [
+      "nao_classe",
+      "socialismo",
+      0.5659493222917291
+    ],
+    [
+      "nao_comunismo",
+      "socialismo",
+      0.5659493222917291
+    ],
+    [
+      "camaradas",
+      "organizam",
+      0.8476352133131854
+    ],
+    [
+      "essenciais",
+      "manter",
+      1.0
+    ],
+    [
+      "fortalecimento",
+      "imperativo",
+      1.0
+    ],
+    [
+      "empresas",
+      "estatais",
+      1.0
+    ],
+    [
+      "aumenta",
+      "estatais",
+      1.0
+    ]
+  ],
+  "communities": [
+    [
+      "abolida",
+      "individual",
+      "competitividade",
+      "toda",
+      "violação",
+      "voluntário",
+      "nao_capital",
+      "setor_privado",
+      "privada",
+      "controles",
+      "empreendedorismo",
+      "florescem",
+      "livre_comércio",
+      "menos",
+      "inviolável",
+      "desnecessários",
+      "nao_anarquia",
+      "nao_economia_de_mercado",
+      "nao_eficiência",
+      "nao_estado_mínimo",
+      "nao_estatismo",
+      "nao_individualismo",
+      "nao_liberdade",
+      "nao_lucro",
+      "nao_voluntário",
+      "prospera",
+      "resolvem",
+      "espontâneo",
+      "estado_mínimo",
+      "liberdade",
+      "livre_mercado",
+      "anarquia",
+      "capital",
+      "concorrência",
+      "estatismo",
+      "eficiência",
+      "propriedade",
+      "autônomo",
+      "contrato",
+      "individualismo",
+      "desregulação",
+      "estatal",
+      "mercados",
+      "nao_necessidade",
+      "direito",
+      "trabalho",
+      "estatais",
+      "impede",
+      "cada",
+      "escolhas",
+      "indivíduo",
+      "direitos",
+      "garante",
+      "aumenta",
+      "empresas",
+      "contratos",
+      "destrói",
+      "livre_iniciativa",
+      "cidadão",
+      "agressão",
+      "comprometido",
+      "responsabilidade",
+      "constitui",
+      "qualquer"
+    ],
+    [
+      "autoridade",
+      "nao_estabilidade",
+      "caos",
+      "dissolve",
+      "nao_cultura",
+      "nao_herança",
+      "nao_identidade",
+      "nao_pátria",
+      "nao_religião",
+      "relativismo",
+      "civilização",
+      "religião",
+      "hierarquia",
+      "família",
+      "identidade",
+      "disciplina",
+      "nao_civilização",
+      "nação",
+      "nao_segurança",
+      "nao_família",
+      "respeito",
+      "fragmenta",
+      "soberania",
+      "exige",
+      "pública",
+      "nao_costumes",
+      "nao_disciplina",
+      "nao_hierarquia",
+      "nao_nação",
+      "nao_responsabilidade",
+      "nao_soberania",
+      "nao_valores",
+      "perigosamente",
+      "cultural",
+      "nacional",
+      "depende",
+      "costumes",
+      "tradição",
+      "cultura",
+      "herança",
+      "moral",
+      "segurança_pública",
+      "estabilidade",
+      "valores",
+      "ordem",
+      "imperativo",
+      "orienta",
+      "garantem",
+      "manter",
+      "fortalecimento",
+      "civilizatória",
+      "sustenta",
+      "gerações",
+      "pátria",
+      "segurança",
+      "tradicionais",
+      "essenciais",
+      "futuras"
+    ],
+    [
+      "alicerce",
+      "preservada",
+      "deve",
+      "sociedade",
+      "condição",
+      "nao_alienação",
+      "nao_burguesia",
+      "nao_coletivização",
+      "nao_economia_planificada",
+      "nao_estatização",
+      "nao_exploração",
+      "nao_expropriação",
+      "nao_opressão",
+      "nao_propriedade_coletiva",
+      "nao_socialismo",
+      "nao_vanguarda",
+      "burguesia",
+      "exploração",
+      "comunismo",
+      "expropriação",
+      "vanguarda",
+      "camarada",
+      "revolucionário",
+      "só",
+      "coletiva",
+      "proletariado",
+      "estatização",
+      "promovida",
+      "superada",
+      "apenas",
+      "elimina",
+      "opressão",
+      "trabalhador",
+      "concentra",
+      "explora",
+      "marxismo",
+      "poder",
+      "perpetua",
+      "burguesa",
+      "mascara"
+    ],
+    [
+      "camaradas",
+      "organizam",
+      "contra",
+      "classe",
+      "defendemos",
+      "propriedade_coletiva",
+      "propriedade_privada",
+      "via",
+      "nao_internacionalismo",
+      "cidadania",
+      "negociação",
+      "reformista",
+      "sindicato",
+      "concilia",
+      "desigualdade",
+      "forma",
+      "gradual",
+      "regulada",
+      "eficiente",
+      "distribui",
+      "economia_de_mercado",
+      "livre",
+      "promove",
+      "nao_abolir",
+      "estado",
+      "mercado",
+      "proteção",
+      "nao_espontâneo",
+      "coercitiva",
+      "indivíduos",
+      "nao_competitividade",
+      "nao_concorrência",
+      "nao_desregulação",
+      "nao_empreendedorismo",
+      "nao_livre_comércio",
+      "nao_propriedade_privada",
+      "estabeleceriam",
+      "voluntariamente",
+      "lucro",
+      "privatização"
+    ],
+    [
+      "alcança",
+      "direitos_humanos",
+      "gradualismo",
+      "meio",
+      "saúde",
+      "social",
+      "sustentável",
+      "democrática",
+      "resulta",
+      "previdência_social",
+      "progresso",
+      "constrói",
+      "inclusão",
+      "redistribuição",
+      "justiça",
+      "partes",
+      "reformismo",
+      "educação",
+      "reduz",
+      "seguridade",
+      "bem_estar_social",
+      "conciliação",
+      "respeitando",
+      "assegura",
+      "conflitos",
+      "setores",
+      "buscamos",
+      "institucional",
+      "salário_mínimo",
+      "sistema_único_de_saúde",
+      "solidariedade",
+      "welfare"
+    ],
+    [
+      "alienação",
+      "nao_ditadura",
+      "dominante",
+      "planificação",
+      "intacta",
+      "nao_camarada",
+      "nao_classe",
+      "nao_planificação",
+      "nao_revolucionário",
+      "permanecerá",
+      "ditadura",
+      "economia_planificada",
+      "dialética",
+      "socialismo",
+      "revolução",
+      "coletivização",
+      "internacionalismo",
+      "nao_comunismo",
+      "rumo",
+      "fim",
+      "história",
+      "motor",
+      "produção",
+      "meios",
+      "porá"
+    ]
+  ],
+  "assignment": {
+    "0": "libertarianismo",
+    "1": "conservadorismo",
+    "2": "comunismo",
+    "3": "libertarianismo",
+    "4": "social-democracia",
+    "5": "comunismo"
+  },
+  "vocab_size": 259,
+  "supervised": true
+}

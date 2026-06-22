@@ -32,6 +32,8 @@ def build_reference_model(
     max_communities: int = 10,
     doc_labels: list[str] | None = None,
     label_weight: float = 0.5,
+    min_df: int = 1,
+    max_df: float = 1.0,
 ) -> dict[str, Any]:
     """Constrói o modelo de referência a partir das janelas de coocorrência do corpus.
 
@@ -65,6 +67,10 @@ def build_reference_model(
             supervisionado. Quando None, usa apenas seeds (comportamento original).
         label_weight: Peso dos rótulos supervisionados vs. seeds na ancoragem.
             0.0 = apenas seeds, 1.0 = apenas rótulos. Padrão: 0.5.
+        min_df: Frequência mínima de janelas para manter um termo no vocabulário.
+            Termos raros (abaixo deste limiar) são descartados antes da ponderação.
+        max_df: Frequência máxima como fração do total de janelas. Termos muito
+            comuns (ex.: palavras funcionais que escaparam das stopwords) são descartados.
 
     Returns:
         Dicionário do modelo com campos:
@@ -75,9 +81,13 @@ def build_reference_model(
           - "vocab_size": tamanho do vocabulário.
           - "supervised": True se rótulos foram usados, False caso contrário.
     """
-    # 1 & 2. Vocabulário e coocorrências
+    # 1. Vocabulário e 2. poda por frequência
     vocab = build_vocab_from_windows(docs_windows)
     N = sum(len(windows) for windows in docs_windows)
+    if min_df > 1 or max_df < 1.0:
+        vocab = vocab.prune(min_df=min_df, max_df_ratio=max_df, n_windows=N)
+
+    # 3. Coocorrências (apenas termos do vocabulário podado)
     cooc = count_cooccurrences(docs_windows, vocab)
 
     # 3. Ponderação
