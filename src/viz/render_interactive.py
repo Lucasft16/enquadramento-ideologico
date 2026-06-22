@@ -8,26 +8,34 @@ from typing import Any
 
 from src.scoring.doc_graph import build_doc_graph
 
-# Paleta por ideologia — mesma ordem que render.py para consistência visual.
+# Paleta por ideologia — alinhada com seeds.json e generate_corpus.py.
 _IDEOLOGY_COLORS: dict[str, str] = {
-    "neoliberal":   "#377eb8",  # azul
-    "progressista": "#4daf4a",  # verde
-    "conservador":  "#e41a1c",  # vermelho
-    "ancap":        "#ff7f00",  # laranja
-    "unknown":      "#aaaaaa",  # cinza
+    "libertarianismo":   "#377eb8",  # azul
+    "conservadorismo":   "#e41a1c",  # vermelho
+    "comunismo":         "#984ea3",  # roxo
+    "social-democracia": "#4daf4a",  # verde
+    "unknown":           "#aaaaaa",  # cinza
+}
+
+_IDEOLOGY_BORDER: dict[str, str] = {
+    "libertarianismo":   "#1a5fa0",
+    "conservadorismo":   "#a01010",
+    "comunismo":         "#6b2e7a",
+    "social-democracia": "#2d7a2a",
+    "unknown":           "#888888",
 }
 
 _PHYSICS_OPTIONS = {
     "physics": {
         "enabled": True,
         "barnesHut": {
-            "gravitationalConstant": -6000,
-            "centralGravity": 0.3,
-            "springLength": 130,
-            "springConstant": 0.04,
-            "damping": 0.09,
+            "gravitationalConstant": -3000,
+            "centralGravity": 0.8,
+            "springLength": 120,
+            "springConstant": 0.05,
+            "damping": 0.12,
         },
-        "stabilization": {"iterations": 150},
+        "stabilization": {"iterations": 200, "fit": True},
     },
     "edges": {
         "smooth": {"type": "continuous"},
@@ -38,6 +46,13 @@ _PHYSICS_OPTIONS = {
         "font": {"size": 13, "strokeWidth": 2, "strokeColor": "#ffffff"},
         "borderWidth": 2,
         "shadow": True,
+    },
+    "groups": {
+        "libertarianismo":   {"color": {"background": "#377eb8", "border": "#1a5fa0", "highlight": {"background": "#5599cc", "border": "#1a5fa0"}}},
+        "conservadorismo":   {"color": {"background": "#e41a1c", "border": "#a01010", "highlight": {"background": "#f05555", "border": "#a01010"}}},
+        "comunismo":         {"color": {"background": "#984ea3", "border": "#6b2e7a", "highlight": {"background": "#b070bb", "border": "#6b2e7a"}}},
+        "social-democracia": {"color": {"background": "#4daf4a", "border": "#2d7a2a", "highlight": {"background": "#70c86e", "border": "#2d7a2a"}}},
+        "unknown":           {"color": {"background": "#dddddd", "border": "#aaaaaa", "highlight": {"background": "#eeeeee", "border": "#aaaaaa"}}},
     },
     "interaction": {
         "hover": True,
@@ -100,6 +115,18 @@ def render_doc_graph_html(
         out_path: Caminho do arquivo HTML de saída.
         min_edge_weight: Peso mínimo para exibir uma aresta (filtra ruído).
     """
+    net = _build_network(windows, model, min_edge_weight)
+    out = Path(out_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    net.save_graph(str(out))
+
+
+def _build_network(
+    windows: list[list[str]],
+    model: dict[str, Any],
+    min_edge_weight: int = 1,
+):
+    """Constrói e retorna o objeto Network do pyvis (lógica compartilhada)."""
     try:
         from pyvis.network import Network
     except ImportError as e:
@@ -110,23 +137,18 @@ def render_doc_graph_html(
     node_sizes = _normalize_sizes(term_ideology_map)
 
     net = Network(
-        height="780px",
+        height="820px",
         width="100%",
-        bgcolor="#f8f8f8",
+        bgcolor="#f9f9f9",
         font_color="#222222",
-        select_menu=True,
-        filter_menu=True,
-        neighborhood_highlight=True,
         cdn_resources="in_line",
     )
     net.set_options(json.dumps(_PHYSICS_OPTIONS))
 
-    # Adiciona nós
     for term in doc_graph.vertices():
         ideology, centrality = term_ideology_map.get(term, ("unknown", 0.0))
-        color = _IDEOLOGY_COLORS.get(ideology, _IDEOLOGY_COLORS["unknown"])
         size = node_sizes.get(term, 12)
-        shape = "ellipse" if ideology != "unknown" else "diamond"
+        shape = "ellipse" if ideology != "unknown" else "dot"
         tooltip = (
             f"<b>{term}</b><br>"
             f"Ideologia: <b>{ideology}</b><br>"
@@ -136,13 +158,11 @@ def render_doc_graph_html(
             term,
             label=term,
             title=tooltip,
-            color=color,
             size=size,
             shape=shape,
             group=ideology,
         )
 
-    # Adiciona arestas
     for u, v, w in doc_graph.edges():
         if w < min_edge_weight:
             continue
@@ -167,6 +187,26 @@ def render_doc_graph_html(
 
         net.add_edge(u, v, **options)
 
-    out = Path(out_path)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    net.save_graph(str(out))
+    return net
+
+
+def get_doc_graph_html(
+    windows: list[list[str]],
+    model: dict[str, Any],
+    min_edge_weight: int = 1,
+) -> str:
+    """Retorna o HTML do grafo interativo como string (sem salvar em disco).
+
+    Útil para embuti-lo diretamente em interfaces como Streamlit via
+    ``st.components.v1.html()``.
+
+    Args:
+        windows: Janelas do documento (saída de process_document).
+        model: Modelo de referência.
+        min_edge_weight: Peso mínimo para exibir uma aresta.
+
+    Returns:
+        String HTML auto-contida com JS/CSS embutidos (cdn_resources="in_line").
+    """
+    net = _build_network(windows, model, min_edge_weight)
+    return net.generate_html()
