@@ -103,18 +103,20 @@ class Vocabulary:
             return 0
         return self._doc_freq[tid]
 
-    def prune(self, min_df: int = 1, max_df_ratio: float = 1.0) -> "Vocabulary":
+    def prune(self, min_df: int = 1, max_df_ratio: float = 1.0, n_windows: int = 0) -> "Vocabulary":
         """Remove termos fora dos limites de frequência e retorna novo Vocabulary.
 
         Args:
             min_df: Frequência mínima de documento (inclusivo).
-            max_df_ratio: Frequência máxima como fração do total de janelas (0-1].
+            max_df_ratio: Frequência máxima como fração do total de janelas (0–1].
+            n_windows: Total de janelas processadas. Se 0, usa o máximo observado
+                entre as frequências como aproximação conservadora.
 
         Returns:
             Novo Vocabulary com apenas os termos dentro dos limites.
         """
-        total = sum(self._doc_freq.values()) or 1
-        max_abs = int(max_df_ratio * total)
+        n = n_windows if n_windows > 0 else max(self._doc_freq.values(), default=1)
+        max_abs = int(max_df_ratio * n)
         new_vocab = Vocabulary()
         for term, tid in self._term_to_id.items():
             freq = self._doc_freq[tid]

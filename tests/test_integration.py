@@ -68,15 +68,15 @@ class TestIntegration:
             "família tradicional valores morais ordem segurança pátria nação",
         ]
         seeds = {
-            "neoliberal": ["mercado", "capital", "eficiência"],
-            "progressista": ["saúde", "educação", "trabalhadores"],
-            "conservador": ["família", "valores", "pátria"],
+            "libertarianismo": ["mercado", "capital", "eficiência"],
+            "social-democracia": ["saúde", "educação", "trabalhadores"],
+            "conservadorismo": ["família", "valores", "pátria"],
         }
         model = _build_minimal_model(docs, seeds)
         test_docs = [
-            "mercado privatização capital lucro",           # neoliberal
-            "saúde pública trabalhadores direitos greve",   # progressista
-            "família tradição ordem segurança pátria",      # conservador
+            "mercado privatização capital lucro",           # libertarianismo
+            "saúde pública trabalhadores direitos greve",   # social-democracia
+            "família tradição ordem segurança pátria",      # conservadorismo
             "texto completamente fora do vocabulário xyz",  # desconhecido
             "",                                             # vazio
         ]

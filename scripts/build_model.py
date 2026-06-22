@@ -175,6 +175,8 @@ def main() -> None:
         max_communities=len(seeds) + 2,
         doc_labels=doc_labels,
         label_weight=args.label_weight,
+        min_df=cfg.get("min_df", 1),
+        max_df=cfg.get("max_df", 1.0),
     )
 
     # 6. Salva

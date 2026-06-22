@@ -54,12 +54,13 @@ with st.sidebar:
     st.header("Configurações")
     method = st.radio(
         "Método de classificação",
-        options=["Janela de contexto", "Jaccard"],
+        options=["graph", "jaccard"],
+        format_func=lambda x: "Janela de contexto" if x == "graph" else "Jaccard",
         index=0,
         help=(
             "**Janela de contexto** — usa as janelas de co-ocorrência do documento para pontuar "
             "pares de termos ideológicos que aparecem juntos no mesmo contexto.\n\n"
-            "**jaccard** — usa apenas presença/ausência dos termos, sem considerar "
+            "**Jaccard** — usa apenas presença/ausência dos termos, sem considerar "
             "o contexto em que aparecem."
         ),
     )
