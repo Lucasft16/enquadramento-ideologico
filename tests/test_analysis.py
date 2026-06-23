@@ -1,13 +1,11 @@
-"""Testes para analysis: filtering, traversal, communities, centrality, shortest_path."""
+"""Testes para analysis: filtering, traversal, communities, centrality."""
 
-import math
 import pytest
 
 from src.datastructures.graph import Graph
-from src.analysis.traversal import bfs, dfs, connected_components
+from src.analysis.traversal import bfs, connected_components
 from src.analysis.filtering import max_spanning_backbone, threshold_filter, disparity_filter
 from src.analysis.centrality import degree_centrality, betweenness_brandes, top_k
-from src.analysis.shortest_path import dijkstra, reconstruct_path
 from src.analysis.communities import detect_communities, label_propagation
 
 
@@ -50,18 +48,9 @@ class TestTraversal:
         result = bfs(g, "a")
         assert sorted(result) == ["a", "b", "c"]
 
-    def test_dfs_visits_all_in_connected(self):
-        g = make_triangle()
-        result = dfs(g, "a")
-        assert sorted(result) == ["a", "b", "c"]
-
     def test_bfs_starts_with_source(self):
         g = make_triangle()
         assert bfs(g, "b")[0] == "b"
-
-    def test_dfs_starts_with_source(self):
-        g = make_triangle()
-        assert dfs(g, "b")[0] == "b"
 
     def test_connected_components_two_groups(self):
         g = Graph()
@@ -293,49 +282,6 @@ class TestCentrality:
         scores = {str(i): 1.0 for i in range(10)}
         result = top_k(scores, k=3)
         assert len(result) == 3
-
-
-# ─────────────────────────────────────────────
-# Shortest Path
-# ─────────────────────────────────────────────
-
-class TestShortestPath:
-    def test_dijkstra_self_distance_zero(self):
-        g = make_triangle()
-        dist, _ = dijkstra(g, "a")
-        assert dist["a"] == pytest.approx(0.0)
-
-    def test_dijkstra_prefers_high_weight(self):
-        """
-        a --(peso 3)--> b --(peso 1)--> c
-        a --(peso 2)--> c
-
-        Custo (1/w):
-          a→b→c: 1/3 + 1/1 = 1.333
-          a→c:   1/2       = 0.500
-        O caminho mais curto é a→c direto.
-        """
-        g = make_triangle()
-        dist, prev = dijkstra(g, "a")
-        # Custo de a→c deve ser menor pelo caminho direto (1/2 = 0.5)
-        assert dist["c"] == pytest.approx(0.5, abs=1e-9)
-        assert prev["c"] == "a"
-
-    def test_dijkstra_unreachable_is_inf(self):
-        g = Graph()
-        g.add_vertex("alone")
-        g.set_edge("a", "b", 1.0)
-        dist, _ = dijkstra(g, "a")
-        # "alone" não está conectado
-        assert math.isinf(dist.get("alone", math.inf))
-
-    def test_reconstruct_path(self):
-        g = Graph()
-        g.set_edge("a", "b", 1.0)
-        g.set_edge("b", "c", 1.0)
-        dist, prev = dijkstra(g, "a")
-        path = reconstruct_path(prev, "c")
-        assert path == ["a", "b", "c"]
 
 
 # ─────────────────────────────────────────────

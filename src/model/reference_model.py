@@ -12,7 +12,7 @@ from src.graph_build.cooccurrence import count_cooccurrences, build_vocab_from_w
 from src.graph_build.weighting import build_weighted_graph
 from src.analysis.filtering import max_spanning_backbone, threshold_filter, disparity_filter
 from src.analysis.communities import detect_communities, label_propagation
-from src.analysis.centrality import degree_centrality, betweenness_brandes
+from src.analysis.centrality import degree_centrality
 from src.model.anchoring import (
     anchor_communities,
     anchor_communities_supervised,
