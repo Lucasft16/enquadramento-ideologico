@@ -517,19 +517,19 @@ pytest tests/ -v
 pytest tests/ --cov=src --cov-report=term-missing
 ```
 
-![Tests Coverage](outputs/figures/screenshot_coverage.png)
+![Tests Coverage](outputs/figures/screenshot_coverage1.png)
 
 **216 testes** distribuídos em 7 módulos:
 
-| Módulo de teste          | O que cobre                                   |
-| ------------------------ | --------------------------------------------- |
-| `test_datastructures.py` | `Graph`, `Trie`, `UnionFind`                  |
-| `test_parser.py`         | tokenização, stopwords, janelas               |
-| `test_graph_build.py`    | vocabulário, coocorrências, ponderação        |
+| Módulo de teste          | O que cobre                               |
+| ------------------------ | ----------------------------------------- |
+| `test_datastructures.py` | `Graph`, `Trie`, `UnionFind`              |
+| `test_parser.py`         | tokenização, stopwords, janelas           |
+| `test_graph_build.py`    | vocabulário, coocorrências, ponderação    |
 | `test_analysis.py`       | filtragem, comunidades, centralidade, BFS |
-| `test_anchoring.py`      | seeds, ancoragem supervisionada               |
-| `test_scoring.py`        | Jaccard, grafo do documento, normalização     |
-| `test_integration.py`    | pipeline ponta-a-ponta                        |
+| `test_anchoring.py`      | seeds, ancoragem supervisionada           |
+| `test_scoring.py`        | Jaccard, grafo do documento, normalização |
+| `test_integration.py`    | pipeline ponta-a-ponta                    |
 
 ---
 
