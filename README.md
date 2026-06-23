@@ -10,6 +10,9 @@
 [![Licença](https://img.shields.io/badge/licen%C3%A7a-MIT-lightgrey)](LICENSE)
 
 ---
+#### Link dos slides
+[Enquadramento_Ideologico.pdf](https://github.com/user-attachments/files/29230035/Enquadramento_Ideologico.pdf)
+---
 
 ## 👥 Equipe
 
