@@ -1,4 +1,4 @@
-"""Travessias de grafo: BFS, DFS e detecção de componentes conexas."""
+"""Travessias de grafo: BFS e detecção de componentes conexos."""
 
 from __future__ import annotations
 
@@ -10,7 +10,8 @@ from src.datastructures.graph import Graph
 def bfs(graph: Graph, start: str) -> list[str]:
     """Busca em largura (BFS) a partir de um vértice inicial.
 
-    Usa uma fila (deque) explícita — sem recursão.
+    Implementação manual com fila explícita (deque) e conjunto de visitados.
+    Não usa nenhuma função de travessia de biblioteca.
 
     Args:
         graph: Grafo não-direcionado.
@@ -30,35 +31,6 @@ def bfs(graph: Graph, start: str) -> list[str]:
             if nbr not in visited:
                 visited.add(nbr)
                 queue.append(nbr)
-
-    return order
-
-
-def dfs(graph: Graph, start: str) -> list[str]:
-    """Busca em profundidade (DFS) iterativa a partir de um vértice inicial.
-
-    Usa uma pilha explícita — sem recursão para evitar limite de stack.
-
-    Args:
-        graph: Grafo não-direcionado.
-        start: Vértice inicial.
-
-    Returns:
-        Lista de vértices na ordem de visita DFS.
-    """
-    visited: set[str] = set()
-    stack: list[str] = [start]
-    order: list[str] = []
-
-    while stack:
-        v = stack.pop()
-        if v in visited:
-            continue
-        visited.add(v)
-        order.append(v)
-        for nbr in sorted(graph.neighbors(v), reverse=True):  # ordem determinística
-            if nbr not in visited:
-                stack.append(nbr)
 
     return order
 

@@ -5,7 +5,7 @@
 > Trabalho acadêmico — **Estruturas de Dados 2** · Prof. Glauco e John · FCTE / UnB
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://python.org)
-[![Testes](https://img.shields.io/badge/testes-222%20passando-4CAF50?logo=pytest&logoColor=white)](tests/)
+[![Testes](https://img.shields.io/badge/testes-216%20passando-4CAF50?logo=pytest&logoColor=white)](tests/)
 [![Streamlit](https://img.shields.io/badge/interface-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](app.py)
 [![Licença](https://img.shields.io/badge/licen%C3%A7a-MIT-lightgrey)](LICENSE)
 
@@ -137,7 +137,7 @@ enquadramento-ideologico/
 │   │   ├── filtering.py          # Kruskal · threshold · disparity filter
 │   │   ├── communities.py        # Girvan-Newman · propagação de rótulos
 │   │   ├── centrality.py         # grau · Brandes (betweenness)
-│   │   └── traversal.py          # BFS · DFS · componentes conexos
+│   │   └── traversal.py          # BFS · componentes conexos
 │   ├── model/
 │   │   ├── reference_model.py    # pipeline completo: corpus → model.json
 │   │   └── anchoring.py          # seeds + rótulos → ideologia por comunidade
@@ -159,7 +159,7 @@ enquadramento-ideologico/
 │   ├── models/model.json         # modelo treinado (gerado pelo script)
 │   └── figures/                  # PNGs e HTMLs gerados
 │
-├── tests/                        # 222 testes pytest
+├── tests/                        # 216 testes pytest
 └── requirements.txt
 ```
 
@@ -327,7 +327,6 @@ python scripts/classify.py data/examples/meu_texto.txt --out-dir outputs/figures
 | **Algoritmo de Kruskal** (max-spanning)            | Filtragem do backbone do grafo                                            | `src/analysis/filtering.py`        |
 | **Union-Find** (path compression + union by rank)  | Detecção de ciclos para Kruskal                                           | `src/datastructures/union_find.py` |
 | **BFS** (Busca em Largura)                         | Base do Brandes + componentes conexos                                     | `src/analysis/traversal.py`        |
-| **DFS** (Busca em Profundidade)                    | Componentes conexos alternativos                                          | `src/analysis/traversal.py`        |
 | **Betweenness Centrality** (algoritmo de Brandes)  | Identifica arestas ponte para Girvan-Newman                               | `src/analysis/centrality.py`       |
 | **Girvan-Newman**                                  | Detecção de comunidades semânticas                                        | `src/analysis/communities.py`      |
 | **Modularidade de Newman**                         | Critério de parada do Girvan-Newman                                       | `src/analysis/communities.py`      |
@@ -520,14 +519,14 @@ pytest tests/ --cov=src --cov-report=term-missing
 
 ![Tests Coverage](outputs/figures/screenshot_coverage.png)
 
-**222 testes** distribuídos em 7 módulos:
+**216 testes** distribuídos em 7 módulos:
 
 | Módulo de teste          | O que cobre                                   |
 | ------------------------ | --------------------------------------------- |
 | `test_datastructures.py` | `Graph`, `Trie`, `UnionFind`                  |
 | `test_parser.py`         | tokenização, stopwords, janelas               |
 | `test_graph_build.py`    | vocabulário, coocorrências, ponderação        |
-| `test_analysis.py`       | filtragem, comunidades, centralidade, BFS/DFS |
+| `test_analysis.py`       | filtragem, comunidades, centralidade, BFS |
 | `test_anchoring.py`      | seeds, ancoragem supervisionada               |
 | `test_scoring.py`        | Jaccard, grafo do documento, normalização     |
 | `test_integration.py`    | pipeline ponta-a-ponta                        |
